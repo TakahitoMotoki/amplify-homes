@@ -57,7 +57,6 @@ const data = [
 function App() {
    return (
       <div className="App">
-      <NavBar />
       <LineChart
          width={750}
          height={500}
