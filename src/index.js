@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
+
 import App from './App';
+import { ProfCard } from './components';
+
 import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
@@ -12,7 +16,7 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
   <React.StrictMode>
     <AmplifyProvider>
-      <App />
+      <ProfileCard />
     </AmplifyProvider>
   </React.StrictMode>,
   document.getElementById('root')
