@@ -118,10 +118,19 @@ export default function ProfileA(props) {
       </Flex>
       <Button
         display="flex"
+        gap="10px"
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
         shrink="0"
         alignSelf="stretch"
         objectFit="cover"
+        position="relative"
+        borderRadius="4px"
+        padding="12px 24px 12px 24px"
+        backgroundColor="rgba(4,125,149,1)"
         size="large"
+        isDisabled={false}
         variation="primary"
         {...getOverrideProps(overrides, "Button")}
       ></Button>

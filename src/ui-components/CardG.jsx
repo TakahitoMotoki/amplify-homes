@@ -123,7 +123,10 @@ export default function CardG(props) {
         </Flex>
         <Divider
           width="40px"
+          height="1px"
           shrink="0"
+          position="relative"
+          padding="0px 0px 0px 0px"
           size="small"
           orientation="horizontal"
           {...getOverrideProps(overrides, "Divider")}
@@ -158,7 +161,7 @@ export default function CardG(props) {
             children="Information about this product."
             {...getOverrideProps(
               overrides,
-              "Information about this product.ewz"
+              "Information about this product.afw"
             )}
           ></Text>
           <Text
@@ -181,15 +184,22 @@ export default function CardG(props) {
             children="Information about this product."
             {...getOverrideProps(
               overrides,
-              "Information about this product.hcb"
+              "Information about this product.hbu"
             )}
           ></Text>
         </Flex>
         <Badge
-          padding="4px 8px 4px 8px"
           display="flex"
+          gap="10px"
+          direction="row"
           width="fit-content"
+          justifyContent="center"
+          alignItems="center"
           shrink="0"
+          position="relative"
+          borderRadius="99px"
+          padding="4px 8px 4px 8px"
+          backgroundColor="rgba(239,240,240,1)"
           size="small"
           variation="default"
           {...getOverrideProps(overrides, "Badge")}
@@ -214,15 +224,20 @@ export default function CardG(props) {
             height="36px"
             position="relative"
             padding="0px 0px 0px 0px"
-            {...getOverrideProps(overrides, "Ratingzqt")}
+            {...getOverrideProps(overrides, "Rating")}
           >
             <Rating
               display="flex"
+              gap="8px"
+              direction="row"
               width="fit-content"
+              alignItems="center"
               shrink="0"
               height="36px"
+              position="relative"
+              padding="0px 0px 0px 0px"
               size="large"
-              {...getOverrideProps(overrides, "Ratingsmk")}
+              {...getOverrideProps(overrides, "Ratingqen")}
             ></Rating>
             <Text
               fontFamily="Inter"

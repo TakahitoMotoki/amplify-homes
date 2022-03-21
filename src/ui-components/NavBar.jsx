@@ -34,7 +34,7 @@ export default function NavBar(props) {
         alignSelf="stretch"
         position="relative"
         padding="0px 0px 0px 0px"
-        {...getOverrideProps(overrides, "Logovxv")}
+        {...getOverrideProps(overrides, "Logo")}
       >
         <Icon
           width="18px"
@@ -67,7 +67,7 @@ export default function NavBar(props) {
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
           children="Logo"
-          {...getOverrideProps(overrides, "Logostv")}
+          {...getOverrideProps(overrides, "Logomak")}
         ></Text>
       </Flex>
       <Flex
@@ -80,7 +80,7 @@ export default function NavBar(props) {
         height="24px"
         position="relative"
         padding="0px 0px 0px 0px"
-        {...getOverrideProps(overrides, "Frame 321zqx")}
+        {...getOverrideProps(overrides, "Frame 321vkf")}
       >
         <Text
           fontFamily="Inter"
@@ -166,14 +166,19 @@ export default function NavBar(props) {
         height="45px"
         position="relative"
         padding="0px 0px 0px 0px"
-        {...getOverrideProps(overrides, "Frame 321koc")}
+        {...getOverrideProps(overrides, "Frame 321scr")}
       >
         <SearchField
           display="flex"
+          gap="4px"
+          direction="column"
           width="300px"
           shrink="0"
           height="32px"
+          position="relative"
+          padding="0px 0px 0px 0px"
           size="default"
+          isDisabled={false}
           labelHidden={true}
           variation="default"
           {...getOverrideProps(overrides, "SearchField")}

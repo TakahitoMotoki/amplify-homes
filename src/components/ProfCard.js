@@ -1,12 +1,17 @@
+import './ProfCard.css';
+
 import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Icon, Text, View } from "@aws-amplify/ui-react";
+import { Icon, Image, Text, View } from "@aws-amplify/ui-react";
+
+import backgroundImg from './gold.jpg';
 
 export default function ProfCard(props) {
   const { overrides, ...rest } = props;
   return (
-    <View
-      width="330px"
+   <View
+      className="profcard-container"
+      width="100%"
       height="165px"
       overflow="hidden"
       position="relative"
@@ -14,7 +19,14 @@ export default function ProfCard(props) {
       backgroundColor="rgba(34,34,34,1)"
       {...rest}
       {...getOverrideProps(overrides, "ProfileCard")}
-    >
+   >
+
+      <div style={{
+         backgroundImage: `url(${backgroundImg})`,
+         height: "100%",
+         width: "100%"
+      }}></div>
+
       <View
         width="330px"
         height="165px"
@@ -23,11 +35,11 @@ export default function ProfCard(props) {
         left="0px"
         overflow="hidden"
         padding="0px 0px 0px 0px"
-        backgroundColor="rgba(34,34,34,0.6)"
+        backgroundColor="rgba(34,34,34,0.66)"
         {...getOverrideProps(overrides, "Transparent")}
       >
         <Text
-          fontFamily="IBM Plex Serif"
+          fontFamily="serif"
           fontSize="14px"
           fontWeight="400"
           color="rgba(255,255,255,1)"
@@ -45,7 +57,7 @@ export default function ProfCard(props) {
           {...getOverrideProps(overrides, "Details")}
         ></Text>
         <Text
-          fontFamily="IBM Plex Serif"
+          fontFamily="serif"
           fontSize="18px"
           fontWeight="700"
           color="rgba(255,255,255,1)"
