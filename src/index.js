@@ -13,7 +13,7 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
-import {AmplifyProvider} from "@aws-amplify/ui-react";
+import { AmplifyProvider } from "@aws-amplify/ui-react";
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
@@ -21,24 +21,21 @@ ReactDOM.render(
    <React.StrictMode>
       <AmplifyProvider>
          <BrowserRouter>
-
             <Flex
                direction="row"
                justifyContent="flex-start"
                alignItems="flex-start"
             >
+
                <div class="nav-container">
                   <NavBar />
                </div>
 
                <div class="main-container">
-                  <Tabs spacing="equal">
-                     <TabItem title="Report">Tab 1 Content</TabItem>
-                     <TabItem title="3D View">Tab 2 Content</TabItem>
-                  </Tabs>
+                  <App />
                </div>
-            </Flex>
 
+            </Flex>
          </BrowserRouter>
       </AmplifyProvider>
    </React.StrictMode>,

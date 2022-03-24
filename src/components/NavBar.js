@@ -11,8 +11,9 @@ export default function NavBar(props) {
          height="300px"
          width="100%"
       >
-         <NavItemLevel1 title="Consulting" />
+         <NavItemLevel1 title="Rental" />
          <NavItemLevel1 title="Journal" />
+         <NavItemLevel1 title="Consulting" />
          <NavItemLevel1 title="Farm" />
          <NavItemLevel2 title="JP00000000" />
          <NavItemLevel2 title="JP00000001" />

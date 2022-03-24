@@ -2,6 +2,8 @@ import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Link, View } from "@aws-amplify/ui-react";
 
+import { Link as ReactRouterLink } from 'react-router-dom';
+
 import './NavItemLevel2.css';
 
 export default function NavItemLevel2(props) {
@@ -17,7 +19,7 @@ export default function NavItemLevel2(props) {
          {...rest}
          {...getOverrideProps(overrides, "NavBarLevel1")}
       >
-         <Link>
+         <Link as={ReactRouterLink} to="/farm/"+{props.title} >
             <div class="link-container">{props.title}</div>
          </Link>
       </View>
