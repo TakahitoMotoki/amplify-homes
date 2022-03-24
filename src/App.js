@@ -1,17 +1,24 @@
+import { Component } from 'react';
+
 import './App.css';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link as ReactRouterLink } from 'react-router-dom';
 import axios from 'axios';
 
 import FarmPage from "./components/app-components/FarmPage";
 
 import { withAuthenticator } from '@aws-amplify/ui-react';
 
+class FarmPageCp extends Component {
+   render() {
+      return <FarmPage />;
+   }
+}
+
 function App() {
    return (
       <Routes>
-         <Route pass="/farm/*" element={ <FarmPage /> } />
-         <Route pass="*" element={ No Page Founded 404 } />
+         <Route pass="/" component={FarmPageCp} />
       </Routes>
    );
 }

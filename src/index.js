@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import App from './App';
-import ProfCard from './components/ProfCard';
 import NavBar from './components/NavBar';
 
-import { Flex, Tabs, TabItem } from '@aws-amplify/ui-react';
-import { BrowserRouter } from 'react-router-dom';
+import { Flex } from '@aws-amplify/ui-react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import FarmPage from "./components/app-components/FarmPage";
 
 import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify';
@@ -32,7 +33,10 @@ ReactDOM.render(
                </div>
 
                <div class="main-container">
-                  <App />
+                  <Routes>
+                     <Route pass="/farm" element={<FarmPage />} />
+                     <Route pass="*" element={<FarmPage />} />
+                  </Routes>
                </div>
 
             </Flex>
