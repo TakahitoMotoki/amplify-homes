@@ -15,9 +15,9 @@ export default function NavBar(props) {
          <NavItemLevel1 title="Journal" />
          <NavItemLevel1 title="Consulting" />
          <NavItemLevel1 title="Farm" />
-         <NavItemLevel2 title="JP00000000" />
-         <NavItemLevel2 title="JP00000001" />
-         <NavItemLevel2 title="JP00000002" />
+         <NavItemLevel2 title="JP00000000" link="/farm/JP00000000" />
+         <NavItemLevel2 title="JP00000001" link="/farm/JP00000001" />
+         <NavItemLevel2 title="JP00000002" link="/farm/JP00000002" />
       </ScrollView>
    );
 }

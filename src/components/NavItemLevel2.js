@@ -19,7 +19,7 @@ export default function NavItemLevel2(props) {
          {...rest}
          {...getOverrideProps(overrides, "NavBarLevel1")}
       >
-         <Link as={ReactRouterLink} to="/farm/"+{props.title} >
+         <Link as={ReactRouterLink} to={props.link} >
             <div class="link-container">{props.title}</div>
          </Link>
       </View>
