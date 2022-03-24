@@ -1,8 +1,8 @@
 import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { View, Icon, Text } from "@aws-amplify/ui-react";
+import { View, Text } from "@aws-amplify/ui-react";
 
-export default function NavBarLevel1(props) {
+export default function NavItemLevel1(props) {
   const { overrides, ...rest } = props;
    return(
       <View

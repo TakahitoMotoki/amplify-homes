@@ -8,6 +8,7 @@ import ProfCard from './components/ProfCard';
 import NavBar from './components/NavBar';
 
 import { Flex, Tabs, TabItem } from '@aws-amplify/ui-react';
+import { BrowserRouter } from 'react-router-dom';
 
 import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify';
@@ -19,24 +20,26 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
    <React.StrictMode>
       <AmplifyProvider>
+         <BrowserRouter>
 
-         <Flex
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-         >
-            <div class="nav-container">
-               <NavBar />
-            </div>
+            <Flex
+               direction="row"
+               justifyContent="flex-start"
+               alignItems="flex-start"
+            >
+               <div class="nav-container">
+                  <NavBar />
+               </div>
 
-            <div class="main-container">
-               <Tabs spacing="equal">
-                  <TabItem title="Report">Tab 1 Content</TabItem>
-                  <TabItem title="3D View">Tab 2 Content</TabItem>
-               </Tabs>
-            </div>
-         </Flex>
+               <div class="main-container">
+                  <Tabs spacing="equal">
+                     <TabItem title="Report">Tab 1 Content</TabItem>
+                     <TabItem title="3D View">Tab 2 Content</TabItem>
+                  </Tabs>
+               </div>
+            </Flex>
 
+         </BrowserRouter>
       </AmplifyProvider>
    </React.StrictMode>,
    document.getElementById('root')

@@ -1,0 +1,16 @@
+.link-container {
+   background-color:#222;
+   color: #DDD;
+   display: flex;
+   align-items: center;
+   font-size: 12px;
+   width: 100%;
+   height: 100%;
+   padding: 0px 0px 0px 60px;
+}
+
+.link-container:hover {
+   background-color: #DDD;
+   color: #222;
+   transition: 0.8s;
+}
