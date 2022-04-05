@@ -2,16 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
-
 import App from './App';
-import NavBar from './components/NavBar';
 
-import { Flex } from '@aws-amplify/ui-react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import FarmPage from "./components/app-components/FarmPage";
-
-import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from './reportWebVitals';
 import Amplify from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
 import { AmplifyProvider } from "@aws-amplify/ui-react";
@@ -21,26 +14,7 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
    <React.StrictMode>
       <AmplifyProvider>
-         <BrowserRouter>
-            <Flex
-               direction="row"
-               justifyContent="flex-start"
-               alignItems="flex-start"
-            >
-
-               <div class="nav-container">
-                  <NavBar />
-               </div>
-
-               <div class="main-container">
-                  <Routes>
-                     <Route pass="/farm" element={<FarmPage />} />
-                     <Route pass="*" element={<FarmPage />} />
-                  </Routes>
-               </div>
-
-            </Flex>
-         </BrowserRouter>
+         <App />
       </AmplifyProvider>
    </React.StrictMode>,
    document.getElementById('root')

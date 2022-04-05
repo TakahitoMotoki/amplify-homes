@@ -1,25 +1,23 @@
-import { Component } from 'react';
-
 import './App.css';
 
-import { Routes, Route, Link as ReactRouterLink } from 'react-router-dom';
-import axios from 'axios';
+import FarmPage from "./components/FarmPage";
+import NavBar from "./components/NavBar";
 
-import FarmPage from "./components/app-components/FarmPage";
-
-import { withAuthenticator } from '@aws-amplify/ui-react';
-
-class FarmPageCp extends Component {
-   render() {
-      return <FarmPage />;
-   }
-}
+import { View, withAuthenticator } from '@aws-amplify/ui-react';
 
 function App() {
    return (
-      <Routes>
-         <Route pass="/" component={FarmPageCp} />
-      </Routes>
+      <View className="container">
+
+         <div class="nav-container">
+            <NavBar />
+         </div>
+
+         <div class="main-container">
+            <FarmPage />
+         </div>
+
+      </View>
    );
 }
 

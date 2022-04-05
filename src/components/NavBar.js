@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollView } from "@aws-amplify/ui-react";
 
-import NavItemLevel1 from "./NavItemLevel1"
-import NavItemLevel2 from "./NavItemLevel2"
+import NavItemLevel1 from "./navbar-components/NavItemLevel1"
+import NavItemLevel2 from "./navbar-components/NavItemLevel2"
 
 export default function NavBar(props) {
    return(
@@ -13,11 +13,10 @@ export default function NavBar(props) {
       >
          <NavItemLevel1 title="Rental" />
          <NavItemLevel1 title="Journal" />
-         <NavItemLevel1 title="Consulting" />
          <NavItemLevel1 title="Farm" />
-         <NavItemLevel2 title="JP00000000" link="/" />
-         <NavItemLevel2 title="JP00000001" link="/farm" />
-         <NavItemLevel2 title="JP00000002" link="/farm/JP00000002" />
+         <NavItemLevel2 title="JP00000000" />
+         <NavItemLevel2 title="JP00000001" />
+         <NavItemLevel2 title="JP00000002" />
       </ScrollView>
    );
 }
