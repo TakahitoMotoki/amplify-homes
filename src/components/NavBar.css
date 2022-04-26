@@ -1,0 +1,10 @@
+.navbar-container {
+   height: 100%;
+   width: 240px;
+   background-color: rgba(34,34,34,1);
+}
+
+.scroll-container {
+   height: 40%;
+   width: 100%;
+}

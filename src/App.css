@@ -29,16 +29,7 @@
 }
 
 .container {
+   height: 100vh;
    display: flex;
    justify-content: flex-start;
-}
-
-.nav-container {
-   height: 100%;
-   width: 240px;
-}
-
-.main-container {
-   height: 100%;
-   width: 100%;
 }

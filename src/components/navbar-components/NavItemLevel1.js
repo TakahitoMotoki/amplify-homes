@@ -1,6 +1,9 @@
 import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { View, Text } from "@aws-amplify/ui-react";
+import { Link } from 'react-router-dom';
+
+import './NavItemLevel.css';
 
 export default function NavItemLevel1(props) {
   const { overrides, ...rest } = props;
@@ -15,24 +18,9 @@ export default function NavItemLevel1(props) {
          {...rest}
          {...getOverrideProps(overrides, "NavBarLevel1")}
       >
-         <Text
-            fontFamily="Roboto"
-            fontSize="12px"
-            fontWeight="400"
-            color="rgba(221,221,221,1)"
-            lineHeight="14.0625px"
-            textAlign="left"
-            display="flex"
-            direction="column"
-            justifyContent="flex-start"
-            position="absolute"
-            top="8px"
-            left="40px"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children={props.title}
-            {...getOverrideProps(overrides, "Consulting")}
-         ></Text>
+         <Link to={props.link}>
+            <div class="link-container-lv1">{props.title}</div>
+         </Link>
       </View>
    );
 }

@@ -19,6 +19,7 @@ export { default as CardG } from "./CardG";
 export { default as HeroLayout3 } from "./HeroLayout3";
 export { default as FAQItem } from "./FAQItem";
 export { default as CardF } from "./CardF";
+export { default as FarmCard } from "./FarmCard";
 export { default as ProductDetail } from "./ProductDetail";
 export { default as CardD } from "./CardD";
 export { default as Features2x3 } from "./Features2x3";

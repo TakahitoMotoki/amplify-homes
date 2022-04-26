@@ -2,7 +2,7 @@ import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { View } from "@aws-amplify/ui-react";
 
-import './NavItemLevel2.css';
+import './NavItemLevel.css';
 
 export default function NavItemLevel2(props) {
   const { overrides, ...rest } = props;
@@ -17,7 +17,7 @@ export default function NavItemLevel2(props) {
          {...rest}
          {...getOverrideProps(overrides, "NavBarLevel1")}
       >
-         <div class="link-container">{props.title}</div>
+         <div class="link-container-lv2">{props.title}</div>
       </View>
    );
 }
