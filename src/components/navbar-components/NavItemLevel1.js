@@ -1,6 +1,6 @@
 import React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { View, Text } from "@aws-amplify/ui-react";
+import { View } from "@aws-amplify/ui-react";
 import { Link } from 'react-router-dom';
 
 import './NavItemLevel.css';
@@ -18,7 +18,7 @@ export default function NavItemLevel1(props) {
          {...rest}
          {...getOverrideProps(overrides, "NavBarLevel1")}
       >
-         <Link to={props.link}>
+         <Link to={props.link} style={{ textDecoration: 'none' }}>
             <div class="link-container-lv1">{props.title}</div>
          </Link>
       </View>

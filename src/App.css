@@ -29,7 +29,7 @@
 }
 
 .container {
-   height: 100vh;
    display: flex;
    justify-content: flex-start;
+   background-color: rgba(34,34,34,1);
 }

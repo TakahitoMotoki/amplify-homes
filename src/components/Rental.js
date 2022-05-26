@@ -1,4 +1,4 @@
-import { Button, SelectField } from "@aws-amplify/ui-react";
+import { Button, CheckboxField, Flex, Heading, SelectField, Text } from "@aws-amplify/ui-react";
 import { Table, TableCell, TableBody, TableHead, TableRow } from "@aws-amplify/ui-react";
 
 import './Rental.css';
@@ -7,8 +7,9 @@ function Record(props) {
    return(
       <TableRow>
          <TableCell>{props.farm}</TableCell>
-         <TableCell>{props.vegetable}</TableCell>
-         <TableCell>{props.last_revenue}</TableCell>
+         <TableCell>{props.climate}</TableCell>
+         <TableCell>{props.is_organic}</TableCell>
+         <TableCell>{props.last_result}</TableCell>
          <TableCell>{props.last_measurement}</TableCell>
       </TableRow>
    )
@@ -18,31 +19,64 @@ export default function Rental(props) {
    return(
       <div class='rental-container'>
          <div class='search-container'>
-            検索条件
-            <SelectField
-               size='small'
-               placeholder='-- 選択してください --'
-               label="農作物"
-               width="200px"
-            >
-               <option value="soy">エダマメ</option>   
-               <option value="beets">ビーツ</option>   
-            </SelectField>
+            <Heading level={4}>
+               検索条件
+            </Heading>
 
-            <SelectField
-               size='small'
-               placeholder='-- 選択してください --'
-               label="地域"
-               width="200px"
-            >
-               <option value="tohoku">東北地方</option>   
-               <option value="kanto">関東地方</option>   
-               <option value="kyusyu">九州地方</option>   
-            </SelectField>
+            <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
+               <Text as="span" width="80px">
+                  農作物
+               </Text>
+               <SelectField
+                  size='small'
+                  placeholder='-- 選択してください --'
+                  width="200px"
+               >
+                  <option value="soy">エダマメ</option>   
+                  <option value="beets">ビーツ</option>   
+               </SelectField>
+            </Flex>
+
+            <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
+               <Text as="span" width="80px">
+                  気候
+               </Text>
+               <SelectField
+                  size='small'
+                  placeholder='-- 選択してください --'
+                  width="200px"
+               >
+                  <option value="tohoku">温暖・湿潤</option>   
+                  <option value="kanto">温暖・乾燥</option>   
+                  <option value="kyusyu">冷涼・湿潤</option>   
+                  <option value="kyusyu">冷涼・乾燥</option>   
+               </SelectField>
+            </Flex>
+
+            <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
+               <Text as="span" width="80px">
+                  有機栽培
+               </Text>
+               <CheckboxField label="可能" name="organic" value="yes" />
+               <CheckboxField label="不可" name="organic" value="yes" />
+            </Flex>
+
+            <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
+               <Text as="span" width="80px">
+                  前回の結果
+               </Text>
+               <CheckboxField label="S" name="rank_s" value="yes" />
+               <CheckboxField label="A" name="rank_a" value="yes" />
+               <CheckboxField label="B" name="rank_b" value="yes" />
+               <CheckboxField label="C" name="rank_c" value="yes" />
+               <checkboxfield label="d" name="rank_d" value="yes" />
+               <CheckboxField label="E" name="rank_e" value="yes" />
+            </Flex>
 
             <Button
                variation='primary'
                isLoading={false}
+               margin='20px 0px 0px 0px'
             >
                検索
             </Button>
@@ -50,6 +84,9 @@ export default function Rental(props) {
          </div>
 
          <div class='result-container'>
+            <Heading level={4}>
+               検索結果
+            </Heading>
             
             <Table
                highlightOnHover={true}
@@ -59,18 +96,31 @@ export default function Rental(props) {
                <TableHead>
                   <TableRow>
                      <TableCell as="th">農地</TableCell>
-                     <TableCell as="th">野菜</TableCell>
-                     <TableCell as="th">前回の売上, XYM</TableCell>
+                     <TableCell as="th">気候</TableCell>
+                     <TableCell as="th">有機栽培</TableCell>
+                     <TableCell as="th">前回の結果</TableCell>
                      <TableCell as="th">前回の土壌測定</TableCell>
                   </TableRow>
                </TableHead>
                <TableBody>
-                  <Record farm="JP00000000" vegetable="エダマメ" last_revenue="228.67" last_measurement="2022/2/24" />
-                  <Record farm="JP00000001" vegetable="エダマメ" last_revenue="349.23" last_measurement="2022/1/9" />
-                  <Record farm="JP00000002" vegetable="ビーツ" last_revenue="199.75" last_measurement="2021/12/18" />
+                  <Record farm="JP00000000" climate="温暖・湿潤" is_organic="---" last_result="B" last_measurement="2022/2/24" />
+                  <Record farm="JP00000001" climate="冷涼・乾燥" is_organic="◯" last_result="S" last_measurement="2022/4/12" />
+                  <Record farm="JP00000002" climate="温暖・湿潤" is_organic="◯" last_result="A" last_measurement="2021/12/23" />
                </TableBody>
             </Table>
   
+            <Heading level={4}>
+               詳細データ
+            </Heading>
+            ・写真
+            ・平均気温
+            ・平均湿度
+            ・平均光量（快晴の割合とか）
+            ・降水量
+            ・土壌成分履歴
+            ・作付の履歴（連作障害とかチェック用）
+            ・作付可能な農作物
+            ・アラート（連作障害起こる可能性あり、XXの害虫に注意など）
          </div>
       </div>
    );

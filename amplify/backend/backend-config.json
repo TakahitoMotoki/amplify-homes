@@ -53,5 +53,12 @@
         ]
       }
     }
+  },
+  "storage": {
+    "s3amplifyhomesstoragef508e83d": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

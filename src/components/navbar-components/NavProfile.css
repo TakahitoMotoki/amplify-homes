@@ -1,0 +1,16 @@
+.navprofile-container {
+   color: #DDD;
+   font-size: 14px;
+   width: 100%;
+   padding: 0px 0px 10px 50px;
+}
+
+.name-container{
+   font-weight: bold;
+   margin: 0 0 15px 0;
+}
+
+.text-container{
+   font-size: 11px;
+   margin: 0;
+}
