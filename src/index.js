@@ -8,14 +8,46 @@ import App from './App';
 import Amplify from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
 import { AmplifyProvider } from "@aws-amplify/ui-react";
+import { createTheme, defaultTheme, ThemeProvider } from "@aws-amplify/ui-react";
+import { Card, Text, ToggleButton, ToggleButtonGroup } from "@aws-amplify/ui-react";
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 
-ReactDOM.render(
-   <React.StrictMode>
-      <AmplifyProvider>
+function MyThemeProvider() {
+   const theme = createTheme({
+      name: 'dark-mode-theme',
+      overrides: [
+         {
+            colorMode: "dark",
+            tokens: {
+               colors: {
+                  neutral: {
+                     // flipping the neutral palette
+                     10: defaultTheme.tokens.colors.neutral[100],
+                     20: defaultTheme.tokens.colors.neutral[90],
+                     40: defaultTheme.tokens.colors.neutral[80],
+                     80: defaultTheme.tokens.colors.neutral[40],
+                     90: defaultTheme.tokens.colors.neutral[20],
+                     100: defaultTheme.tokens.colors.neutral[10],
+                  },
+                  black: { value: "#fff" },
+                  white: { value: "#000" },
+               },
+            },
+         },
+      ],
+   });
+
+   return (
+      <AmplifyProvider theme={theme} colorMode="dark" >
          <App />
       </AmplifyProvider>
+   );
+}
+
+ReactDOM.render(
+   <React.StrictMode>
+      <MyThemeProvider />
    </React.StrictMode>,
    document.getElementById('root')
 );

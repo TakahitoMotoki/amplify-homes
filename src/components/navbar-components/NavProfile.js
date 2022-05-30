@@ -10,7 +10,7 @@ export default function NavProfile(props) {
    return(
       <div class="navprofile-container">
          <p class="name-container">Admin Bac さん</p>
-         <Divider border="1px solid #4CE096" borderRadius="1px" />
+         <Divider border="1.5px solid #4CE096" borderRadius="1px" />
       </div>
    );
 }
