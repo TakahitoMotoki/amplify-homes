@@ -1,6 +1,15 @@
-type Home @model @auth(rules: [{allow: public}]) {
+type FarmCom @model @auth(rules: [{allow: public}]) {
   id: ID!
+  name: String
+  postalcode: String
+  country: Float
+  province: String
+  city: String
   address: String
-  image_url: String
-  price: Float
+  temperature: AWSJSON
+  humidity: AWSJSON
+  precipitation: AWSJSON
+  vol_of_sunshine: AWSJSON
+  is_organic: Boolean
 }
+ 

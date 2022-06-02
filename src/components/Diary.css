@@ -2,3 +2,8 @@
    height: 100%;
    width: 80%;
 }
+
+amplify-s3-image {
+   --height: 400px;
+   --width: 400px;
+}

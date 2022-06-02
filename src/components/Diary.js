@@ -1,13 +1,14 @@
 import { Flex, Heading, Text, Tabs, TabItem } from "@aws-amplify/ui-react";
-import { AmplifyS3Album } from "@aws-amplify/ui-react/legacy";
+import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
+import { Storage } from "aws-amplify";
 
 import './Diary.css';
 
 export default function Diary(props) {
    return(
       <div class='diary-container'>
-         <AmplifyS3Album
-            picker={false}  
+         <AmplifyS3Image
+            imgKey="220602_Photo2.jpg"
          />
 
          <Flex direction="column">

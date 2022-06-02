@@ -20,7 +20,18 @@ export default function NavBar(props) {
             <NavProfile />
             <NavItemLevel1 title="Profile" link="profile" />
             <NavItemLevel1 title="Rental" link="rental" />
-            <NavItemLevel1 title="Journal" link="journal" />
+            <div class="divider-container">
+               <Divider border="0.3px solid #888" borderRadius="0.3px" />
+            </div>
+            <Text
+               color="#888"
+               fontSize="14px"
+               padding="5px 0 0 50px"
+            >
+               JOURNAL
+            </Text>
+            <NavItemLevel1 title="Publish" link="journal" />
+            <NavItemLevel1 title="Subscribe" link="journal" />
             <div class="divider-container">
                <Divider border="0.3px solid #888" borderRadius="0.3px" />
             </div>

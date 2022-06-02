@@ -1,13 +1,48 @@
 export const schema = {
     "models": {
-        "Home": {
-            "name": "Home",
+        "FarmCom": {
+            "name": "FarmCom",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "postalcode": {
+                    "name": "postalcode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "country": {
+                    "name": "country",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "province": {
+                    "name": "province",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "city": {
+                    "name": "city",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "address": {
@@ -17,17 +52,38 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "image_url": {
-                    "name": "image_url",
+                "temperature": {
+                    "name": "temperature",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
-                "price": {
-                    "name": "price",
+                "humidity": {
+                    "name": "humidity",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "precipitation": {
+                    "name": "precipitation",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "vol_of_sunshine": {
+                    "name": "vol_of_sunshine",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "is_organic": {
+                    "name": "is_organic",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -49,7 +105,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Homes",
+            "pluralName": "FarmComs",
             "attributes": [
                 {
                     "type": "model",
@@ -76,5 +132,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "abb6f204998ef8932ab6c6fbd372dbd2"
+    "version": "606faaae5a84905bf88e7effdb0b6833"
 };

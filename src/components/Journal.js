@@ -29,15 +29,19 @@ function JournalCard(props) {
                   <Badge size="small" variation="success">Reliable</Badge>
                </Flex>
 
-               <Heading level={4}>
+               <Heading level={5}>
                   {props.title}
                </Heading>
 
-               <Heading level={6}>
-                  Impact Factor: {props.imf}
+               <Heading level={8}>
+                  インポータンス: {props.importance}
                </Heading>
 
-               <Text as="span" height="140px">
+               <Heading level={8}>
+                  倍率: {props.rate}
+               </Heading>
+
+               <Text as="span" height="110px">
                   {props.desc}
                </Text>
 
@@ -58,18 +62,27 @@ export default function Journal(props) {
       <div class='rental-container'>
          <JournalCard 
             title="King Farmers"
-            imf="13.2"
+            importance="13.2"
+            rate="18%"
             desc="ハイランク・信頼度の高いデータのレポートを特集しています。"
          />
          <JournalCard 
             title="Bad Weather"
-            imf="9.8"
+            importance="7.4"
+            rate="41%"
             desc="天候に恵まれないものの、A以上のランクを獲得したレポートを特集しています。"
          />
          <JournalCard 
-            title="Bad Weather"
-            imf="9.8"
-            desc="天候に恵まれないものの、A以上のランクを獲得したレポートを特集しています。"
+            title="South Report"
+            importance="2.7"
+            rate="88%"
+            desc="温暖・熱帯気候で栽培されたレポートを特集しています。"
+         />
+         <JournalCard 
+            title="Journal of Tomato"
+            importance="2.2"
+            rate="76%"
+            desc="キュウリの栽培レポートを特集しています。"
          />
       </div>
    );

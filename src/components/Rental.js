@@ -18,13 +18,12 @@ function Record(props) {
 function CustomSelectField(props) {
    return(
       <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
-         <Text as="span" width="80px">
-            {props.title}
-         </Text>
          <SelectField
+            label={props.title}
             size='small'
+            variation='quiet'
             placeholder='-- 選択してください --'
-            width="200px"
+            width="280px"
             options={props.options}
          ></SelectField>
       </Flex>
@@ -42,35 +41,27 @@ function Search(props) {
             title="農作物" 
             options={["エダマメ", "ビーツ"]}
          />
+
          <CustomSelectField
-            title="気候"
-            options={["温暖・湿潤", "温暖・乾燥", "冷涼・湿潤", "冷涼・乾燥"]} 
+            title="平均気温"
+            options={["寒冷（10℃未満）", "冷涼（10℃~15℃）", "温暖（20℃~25℃）", "熱帯（25℃以上）"]} 
+         />
+      
+         <CustomSelectField
+            title="降水量"
+            options={["少なめ", "普通", "多め"]} 
          />
 
-         <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
-            <Text as="span" width="80px">
-               有機栽培
-            </Text>
-            <CheckboxField label="可能" name="organic" value="yes" />
-            <CheckboxField label="不可" name="organic" value="yes" />
-         </Flex>
-
-         <Flex direction="row" alignItems="center" margin="20px 0px 0px 0px">
-            <Text as="span" width="80px">
-               前回の結果
-            </Text>
-            <CheckboxField label="S" name="rank_s" value="yes" />
-            <CheckboxField label="A" name="rank_a" value="yes" />
-            <CheckboxField label="B" name="rank_b" value="yes" />
-            <CheckboxField label="C" name="rank_c" value="yes" />
-            <CheckboxField label="D" name="rank_d" value="yes" />
-            <CheckboxField label="E" name="rank_e" value="yes" />
-         </Flex>
+         <CustomSelectField
+            title="有機栽培"
+            options={["可", "不可"]} 
+         />
 
          <Button
             variation='primary'
             isLoading={false}
-            margin='20px 0px 0px 0px'
+            width="280px"
+            margin='40px 0px 0px 0px'
          >
             検索
          </Button>
@@ -102,9 +93,9 @@ function Result(props) {
                </TableRow>
             </TableHead>
             <TableBody>
-               <Record farm="JP00000000" climate="温暖・湿潤" is_organic="---" last_result="B" last_measurement="2022/2/24" />
-               <Record farm="JP00000001" climate="冷涼・乾燥" is_organic="◯" last_result="S" last_measurement="2022/4/12" />
-               <Record farm="JP00000002" climate="温暖・湿潤" is_organic="◯" last_result="A" last_measurement="2021/12/23" />
+               <Record farm="JP00000000" climate="温暖・湿潤" is_organic="不可" last_result="B" last_measurement="2022/2/24" />
+               <Record farm="JP00000001" climate="冷涼・乾燥" is_organic="可" last_result="S" last_measurement="2022/4/12" />
+               <Record farm="JP00000002" climate="温暖・湿潤" is_organic="可" last_result="A" last_measurement="2021/12/23" />
             </TableBody>
          </Table>
       </div>
