@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-amplifyhomes-devi-123300-unauthRole",
       "StackName": "amplify-amplifyhomes-devi-123300",
       "StackId": "arn:aws:cloudformation:us-east-2:591228062386:stack/amplify-amplifyhomes-devi-123300/b8cdbd20-a2c9-11ec-be1e-0a287ffc7376",
-      "AmplifyAppId": "dcswga1ypuee2"
+      "AmplifyAppId": "dcswga1ypuee2",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplifyhomes-devi-123300-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {

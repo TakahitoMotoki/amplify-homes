@@ -1,5 +1,99 @@
 export const schema = {
     "models": {
+        "Farm": {
+            "name": "Farm",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "farmcom_id": {
+                    "name": "farmcom_id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "length": {
+                    "name": "length",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "width": {
+                    "name": "width",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "area": {
+                    "name": "area",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "is_available": {
+                    "name": "is_available",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Farms",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "FarmCom": {
             "name": "FarmCom",
             "fields": {
@@ -27,7 +121,7 @@ export const schema = {
                 "country": {
                     "name": "country",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -132,5 +226,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "606faaae5a84905bf88e7effdb0b6833"
+    "version": "665abc2eff5e13a452f0d7f065f8875f"
 };

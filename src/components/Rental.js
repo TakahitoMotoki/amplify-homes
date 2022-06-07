@@ -1,7 +1,12 @@
-import { Button, CheckboxField, Flex, Heading, SelectField, ScrollView, Text } from "@aws-amplify/ui-react";
+import { Button, Flex, Heading, SelectField, ScrollView } from "@aws-amplify/ui-react";
 import { Table, TableCell, TableBody, TableHead, TableRow } from "@aws-amplify/ui-react";
+import { API } from "aws-amplify";
+import { useEffect } from 'react';
 
 import './Rental.css';
+
+const apiName = 'api0c080238';
+const apiPath = '/farms/avail';
 
 function Record(props) {
    return(
@@ -132,6 +137,19 @@ function ResultDetail(props) {
 }
 
 export default function Rental(props) {
+   useEffect(()  => {
+      getAvailFarms();
+   }, []);
+
+   async function getAvailFarms() {
+      API.get(apiName, apiPath, {}).then(result => {
+         this.todos = JSON.parse(result.body);
+      }).catch(err => {
+        console.log(err);
+      });
+      console.log("Called API");
+   }
+
    return(
       <div class='rental-container'>
          <Flex direction="row">

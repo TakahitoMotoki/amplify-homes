@@ -1,12 +1,9 @@
 import React from "react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Divider, View, Text } from "@aws-amplify/ui-react";
-import { Link } from 'react-router-dom';
+import { Divider } from "@aws-amplify/ui-react";
 
 import './NavProfile.css';
 
-export default function NavProfile(props) {
-  const { overrides, ...rest } = props;
+export default function NavProfile() {
    return(
       <div class="navprofile-container">
          <p class="name-container">Admin Bac さん</p>

@@ -4,6 +4,11 @@ export type AmplifyDependentResourcesAttributes = {
             "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
+        },
+        "api0c080238": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     },
     "auth": {
@@ -21,6 +26,14 @@ export type AmplifyDependentResourcesAttributes = {
         "s3amplifyhomesstoragef508e83d": {
             "BucketName": "string",
             "Region": "string"
+        }
+    },
+    "function": {
+        "getFarmsAvail": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     }
 }

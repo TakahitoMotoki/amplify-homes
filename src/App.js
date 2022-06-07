@@ -5,7 +5,7 @@ import Rental from "./components/Rental";
 import Journal from "./components/Journal";
 import './App.css';
 
-import { View, withAuthenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {

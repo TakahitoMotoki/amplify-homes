@@ -1,10 +1,29 @@
-import { Flex, Heading, Text, Tabs, TabItem } from "@aws-amplify/ui-react";
+import { Flex, Heading, Text } from "@aws-amplify/ui-react";
 import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
 import { Storage } from "aws-amplify";
+import { useState, useEffect } from 'react';
 
 import './Diary.css';
 
 export default function Diary(props) {
+   const [imgSources, setImgSources] = useState([]);
+
+   useEffect(()  => {
+      loadImage();
+   }, []);
+
+   async function loadImage() {
+      const imgUrls: string[] = [];
+      const result = await Storage.list('');
+      for (let i=0; i<result.length; i++) {
+         const url = await Storage.get(result[i].key);
+         imgUrls.push(url);
+      }
+      setImgSources(imgUrls);
+      console.log("+=+=+=+=+=+= THIS IS MESSAGE +=+=+=+=+=+=+");
+      console.log(imgUrls);
+   }
+
    return(
       <div class='diary-container'>
          <AmplifyS3Image

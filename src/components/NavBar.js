@@ -4,7 +4,6 @@ import { Divider, ScrollView, Text } from "@aws-amplify/ui-react";
 import './NavBar.css';
 
 import NavItemLevel1 from "./navbar-components/NavItemLevel1"
-import NavItemLevel2 from "./navbar-components/NavItemLevel2"
 import NavProfile from "./navbar-components/NavProfile"
 
 export default function NavBar(props) {

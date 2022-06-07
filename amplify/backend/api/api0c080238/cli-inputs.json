@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/farms/avail": {
+      "name": "/farms/avail",
+      "lambdaFunction": "getFarmsAvail",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}

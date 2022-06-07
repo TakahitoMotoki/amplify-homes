@@ -1,4 +1,4 @@
-import { Card, Image, View, Heading, Flex, Badge, Text, Button, useTheme } from "@aws-amplify/ui-react";
+import { Card, Image, Heading, Flex, Badge, Text, Button, useTheme } from "@aws-amplify/ui-react";
 
 import './Journal.css';
 

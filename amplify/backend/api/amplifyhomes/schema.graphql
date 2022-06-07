@@ -1,8 +1,18 @@
+type Farm @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  farmcom_id: ID
+  name: String
+  length: Float
+  width: Float
+  area: Float
+  is_available: Boolean
+}
+
 type FarmCom @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   postalcode: String
-  country: Float
+  country: String
   province: String
   city: String
   address: String

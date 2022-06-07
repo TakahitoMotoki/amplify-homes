@@ -1,5 +1,3 @@
-import { Tabs, TabItem } from "@aws-amplify/ui-react";
-
 import './Profile.css';
 
 function ProfileHeader(props) {

@@ -8,8 +8,7 @@ import App from './App';
 import Amplify from 'aws-amplify';
 import "@aws-amplify/ui-react/styles.css";
 import { AmplifyProvider } from "@aws-amplify/ui-react";
-import { createTheme, defaultTheme, ThemeProvider } from "@aws-amplify/ui-react";
-import { Card, Text, ToggleButton, ToggleButtonGroup } from "@aws-amplify/ui-react";
+import { createTheme, defaultTheme } from "@aws-amplify/ui-react";
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
 

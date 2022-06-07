@@ -20,6 +20,20 @@
         }
       },
       "dependsOn": []
+    },
+    "api0c080238": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "getFarmsAvail",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -60,6 +74,13 @@
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": []
+    }
+  },
+  "function": {
+    "getFarmsAvail": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }

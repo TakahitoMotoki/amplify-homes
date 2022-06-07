@@ -4,8 +4,9 @@ import { schema } from './schema';
 
 
 
-const { FarmCom } = initSchema(schema);
+const { Farm, FarmCom } = initSchema(schema);
 
 export {
+  Farm,
   FarmCom
 };
