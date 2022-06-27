@@ -1,34 +1,49 @@
-import { Flex, Heading, Text } from "@aws-amplify/ui-react";
-import { AmplifyS3Image } from "@aws-amplify/ui-react/legacy";
+import { Flex, Heading, Image, ScrollView, Text } from "@aws-amplify/ui-react";
 import { Storage } from "aws-amplify";
 import { useState, useEffect } from 'react';
 
 import './Diary.css';
 
 export default function Diary(props) {
+   console.log("Diary");
    const [imgSources, setImgSources] = useState([]);
 
    useEffect(()  => {
+      async function loadImage() {
+         const imgKeys: string[] = [];
+         const result = await Storage.list('');
+         for (let i=0; i<result.length; i++) {
+            const url = await Storage.get(result[i].key);
+            if (result[i].key !== '') {
+               imgKeys.push(url);
+            }
+         }
+         setImgSources(imgKeys);
+      }
+      console.log("useEffect");
       loadImage();
    }, []);
 
-   async function loadImage() {
-      const imgUrls: string[] = [];
-      const result = await Storage.list('');
-      for (let i=0; i<result.length; i++) {
-         const url = await Storage.get(result[i].key);
-         imgUrls.push(url);
-      }
-      setImgSources(imgUrls);
-      console.log("+=+=+=+=+=+= THIS IS MESSAGE +=+=+=+=+=+=+");
-      console.log(imgUrls);
-   }
+   useEffect(() => {
+      console.log("useEffect2");
+      console.log(imgSources[0]);
+   }, [imgSources]);
 
    return(
       <div class='diary-container'>
-         <AmplifyS3Image
-            imgKey="220602_Photo2.jpg"
-         />
+         <Heading level={4}>
+            農地の様子 
+         </Heading>
+         <ScrollView height="400px" margin="30px 0 50px 0">
+            <Flex direction="row">
+               {imgSources.map(imgSources => (
+                  <Image
+                     src={imgSources}
+                     height="400px"
+                  />
+               ))}
+            </Flex>
+         </ScrollView>
 
          <Flex direction="column">
             <Heading level={4}>
@@ -52,13 +67,8 @@ export default function Diary(props) {
             </Text>
                
             <Heading level={4}>
-               コメント  
-            </Heading>
-
-            <Heading level={4}>
                アクションパネル   
             </Heading>
-
          </Flex>
       </div>
    );

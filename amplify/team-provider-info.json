@@ -15,6 +15,12 @@
     "categories": {
       "auth": {
         "amplifyhomes": {}
+      },
+      "function": {
+        "getFarmsAvail": {
+          "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
+          "s3Key": "amplify-builds/getFarmsAvail-763845616b473667744c-build.zip"
+        }
       }
     }
   },

@@ -42,34 +42,40 @@ function Search(props) {
             検索条件
          </Heading>
 
-         <CustomSelectField 
-            title="農作物" 
-            options={["エダマメ", "ビーツ"]}
-         />
+         <Flex direction="row" justifyContent="space-between">
+            <CustomSelectField 
+               title="農作物" 
+               options={["エダマメ", "ビーツ"]}
+            />
 
-         <CustomSelectField
-            title="平均気温"
-            options={["寒冷（10℃未満）", "冷涼（10℃~15℃）", "温暖（20℃~25℃）", "熱帯（25℃以上）"]} 
-         />
+            <CustomSelectField
+               title="平均気温"
+               options={["寒冷（10℃未満）", "冷涼（10℃~15℃）", "温暖（20℃~25℃）", "熱帯（25℃以上）"]} 
+            />
+         </Flex>
       
-         <CustomSelectField
-            title="降水量"
-            options={["少なめ", "普通", "多め"]} 
-         />
+         <Flex direction="row" justifyContent="space-between">
+            <CustomSelectField
+               title="降水量"
+               options={["少なめ", "普通", "多め"]} 
+            />
 
-         <CustomSelectField
-            title="有機栽培"
-            options={["可", "不可"]} 
-         />
+            <CustomSelectField
+               title="有機栽培"
+               options={["可", "不可"]} 
+            />
+         </Flex>
 
-         <Button
-            variation='primary'
-            isLoading={false}
-            width="280px"
-            margin='40px 0px 0px 0px'
-         >
-            検索
-         </Button>
+         <Flex direction="row" justifyContent="center">
+            <Button
+               variation='primary'
+               isLoading={false}
+               width="100%"
+               margin='40px 0px 0px 0px'
+            >
+               検索
+            </Button>
+         </Flex>
       </div>
    )
 }
@@ -79,7 +85,7 @@ function Result(props) {
       <div class='result-container'>
          <Search />
 
-         <Heading level={4}>
+         <Heading level={4} margin="0 0 30px 0">
             検索結果
          </Heading>
          
@@ -142,8 +148,32 @@ export default function Rental(props) {
    }, []);
 
    async function getAvailFarms() {
-      API.get(apiName, apiPath, {}).then(result => {
-         this.todos = JSON.parse(result.body);
+      const tableData = [];
+      API.get(apiName, apiPath, {}).then(response => {
+         console.log("+=+=+ in getAvailFarms +=+=+");
+         let respFarm = response["farm"];
+         let respFarmCom = response["farmcom"];
+
+         // FarmComからデータを抽出しtableDataにセットする
+         for (let key in respFarm) {
+            // Farm: farmcom_id と一致するFarmComを探す
+            if (respFarm[key]["farmcom_id"] in respFarmCom) {
+               let farmComKey = respFarm[key]["farmcom_id"];
+               // FarmCom情報も含めてtableDataにセット
+               tableData.push(
+                  {
+                     name: respFarm["name"],
+                     length: respFarm["length"],
+                     width: respFarm["width"],
+                     area: respFarm["area"],
+                     temperature: respFarmCom[farmComKey]["temperature"],
+                     humidity: respFarmCom[farmComKey]["humidity"],
+                     precipitation: respFarmCom[farmComKey]["precipitation"],
+                     vol_of_sunshine: respFarmCom[farmComKey]["vol_of_sunshine"]
+                  }
+               );
+            }
+         }
       }).catch(err => {
         console.log(err);
       });
