@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, SelectField, ScrollView } from "@aws-amplify/ui-react";
 import { Table, TableCell, TableBody, TableHead, TableRow } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import './Rental.css';
 
@@ -10,12 +10,12 @@ const apiPath = '/farms/avail';
 
 function Record(props) {
    return(
-      <TableRow>
-         <TableCell>{props.farm}</TableCell>
-         <TableCell>{props.climate}</TableCell>
-         <TableCell>{props.is_organic}</TableCell>
-         <TableCell>{props.last_result}</TableCell>
-         <TableCell>{props.last_measurement}</TableCell>
+      <TableRow onClick={() => alert()} >
+         <TableCell>{props.displayData.name}</TableCell>
+         <TableCell>{props.displayData.is_organic}</TableCell>
+         <TableCell>{props.displayData.avail_number}</TableCell>
+         <TableCell>{props.temperature}</TableCell>
+         <TableCell>{props.precipitation}</TableCell>
       </TableRow>
    )
 }
@@ -81,6 +81,7 @@ function Search(props) {
 }
 
 function Result(props) {
+   const displayData = props.displayData;
    return(
       <div class='result-container'>
          <Search />
@@ -96,17 +97,21 @@ function Result(props) {
          >
             <TableHead>
                <TableRow>
-                  <TableCell as="th">農地</TableCell>
-                  <TableCell as="th">気候</TableCell>
+                  <TableCell as="th">農園</TableCell>
                   <TableCell as="th">有機栽培</TableCell>
-                  <TableCell as="th">前回の結果</TableCell>
-                  <TableCell as="th">前回の土壌測定</TableCell>
+                  <TableCell as="th">空き農園数</TableCell>
+                  <TableCell as="th">気温</TableCell>
+                  <TableCell as="th">降水量</TableCell>
                </TableRow>
             </TableHead>
             <TableBody>
-               <Record farm="JP00000000" climate="温暖・湿潤" is_organic="不可" last_result="B" last_measurement="2022/2/24" />
-               <Record farm="JP00000001" climate="冷涼・乾燥" is_organic="可" last_result="S" last_measurement="2022/4/12" />
-               <Record farm="JP00000002" climate="温暖・湿潤" is_organic="可" last_result="A" last_measurement="2021/12/23" />
+               {displayData.map(displayData => (
+                  <Record
+                     displayData={displayData}
+                     temperature="温暖"
+                     precipitation="湿潤"
+                  />
+               ))}
             </TableBody>
          </Table>
       </div>
@@ -143,12 +148,56 @@ function ResultDetail(props) {
 }
 
 export default function Rental(props) {
+   // Data displayed in Result.
+   const resultData = [
+                        {
+                           name: "埼玉 XX農園",
+                           length: 5.0,
+                           width: 0.7,
+                           area: 3.5,
+                           is_organic: 1,
+                           avail_number: "24 / 50",
+                           temperature: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
+                           temperature: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
+                           humidity: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
+                           precipitation: { Aug: 110, Sep: 160, Oct: 80 },
+                           vol_of_sunshine: { Aug: 120, Sep: 80, Oct: 60 }
+                        },
+                        {
+                           name: "埼玉 YY農園",
+                           length: 5.0,
+                           width: 0.7,
+                           area: 3.5,
+                           is_organic: 0,
+                           avail_number: "8 / 100",
+                           temperature: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
+                           humidity: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
+                           precipitation: { Aug: 110, Sep: 160, Oct: 80 },
+                           vol_of_sunshine: { Aug: 120, Sep: 80, Oct: 60 }
+                        }
+                     ];
+   /*
+   // Get available farms when the page is loaded.
    useEffect(()  => {
       getAvailFarms();
    }, []);
+   */
 
+   // Data displayed in ResultDetail.
+   const [resultDetailData, setResultDetailData] = useState([]);
+
+   function updateRentalDetail(data) {
+      setResultDetailData(data);
+   }
+
+   // Update ResultDetail when TableCell is clicked.
+   useEffect(()  => {
+      console.log("ResultDetailData is updated.");
+      console.log(resultDetailData.name);
+   }, [resultDetailData]);
+
+   /*
    async function getAvailFarms() {
-      const tableData = [];
       API.get(apiName, apiPath, {}).then(response => {
          console.log("+=+=+ in getAvailFarms +=+=+");
          let respFarm = response["farm"];
@@ -178,12 +227,14 @@ export default function Rental(props) {
         console.log(err);
       });
       console.log("Called API");
+      console.log(tableData);
    }
+   */
 
    return(
       <div class='rental-container'>
          <Flex direction="row">
-            <Result />
+            <Result displayData={resultData} />
             <ResultDetail />
          </Flex>
       </div>

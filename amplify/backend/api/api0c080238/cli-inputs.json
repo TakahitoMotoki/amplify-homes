@@ -10,6 +10,19 @@
           "read"
         ]
       }
+    },
+    "/rental/create": {
+      "name": "/rental/create",
+      "lambdaFunction": "createRental",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
     }
   }
 }

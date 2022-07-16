@@ -32,6 +32,14 @@
             "Name",
             "Arn"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "createRental",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     }
@@ -78,6 +86,11 @@
   },
   "function": {
     "getFarmsAvail": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createRental": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

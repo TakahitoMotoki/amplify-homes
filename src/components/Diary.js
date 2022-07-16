@@ -11,19 +11,26 @@ export default function Diary(props) {
    useEffect(()  => {
       async function loadImage() {
          const imgKeys: string[] = [];
+         
+         // Get the list of images on AWS S3.
          const result = await Storage.list('');
+
+         // Convert the list into URLs.
          for (let i=0; i<result.length; i++) {
             const url = await Storage.get(result[i].key);
             if (result[i].key !== '') {
                imgKeys.push(url);
             }
          }
+
+         // Set URLs in imgSources.
          setImgSources(imgKeys);
       }
       console.log("useEffect");
       loadImage();
    }, []);
 
+   // Redraw the page when imgSources is updated.
    useEffect(() => {
       console.log("useEffect2");
       console.log(imgSources[0]);
