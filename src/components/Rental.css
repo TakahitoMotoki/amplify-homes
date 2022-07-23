@@ -3,16 +3,13 @@
    width: 80%;
 }
 
+.result-container {
+   width: 100%;
+   padding: 50px 50px 50px 50px;
+}
+
 .search-container {
    width: 100%;
    padding: 0 0 50px 0;
 }
 
-.result-container {
-   width: 70%;
-   padding: 50px 50px 50px 50px;
-}
-
-.resultdetail-container {
-   width: 30%;
-}
