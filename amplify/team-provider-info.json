@@ -19,7 +19,7 @@
       "function": {
         "getFarmsAvail": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
-          "s3Key": "amplify-builds/getFarmsAvail-796f4871737244497978-build.zip"
+          "s3Key": "amplify-builds/getFarmsAvail-6933414c6957334d484c-build.zip"
         },
         "createRental": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
