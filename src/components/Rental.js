@@ -1,16 +1,16 @@
 import { Button, Card, Divider, Flex, Heading, Image, SelectField, Text } from "@aws-amplify/ui-react";
-import { API } from "aws-amplify";
+import { Auth, API } from "aws-amplify";
 import { useState, useEffect } from 'react';
 
 import './Rental.css';
 
 const apiName = 'api0c080238';
 const apiPath = '/farms/avail';
-const initHeader = {
-   headers: {
-   }
-}
+const apiPathCreateRental = '/rental/create';
 
+var authUser;
+
+// Child Component for <Search>
 function CustomSelectField(props) {
    return(
          <SelectField
@@ -25,6 +25,7 @@ function CustomSelectField(props) {
    )
 }
 
+// Parent Component for <Search>
 function Search(props) {
    return(
       <div class='search-container'>
@@ -78,7 +79,8 @@ function Search(props) {
    )
 }
 
-function Record(props) {
+// Child Component for <FarmComList>
+function FarmComRecord(props) {
    const organic_converter = {0: "不可", 1: "可"}
 
    return(
@@ -95,22 +97,17 @@ function Record(props) {
                   src="/road-to-milford-new-zealand-800w.jpg"
                   width="30%"
                />
-               <Flex
-                  direction="column"
-                  alignItems="flex-start"
-                  height="200px"
-                  width="70%"
-               >
+               <Flex direction="column" alignItems="flex-start" height="200px" width="70%">
                   <Heading level={5}>
-                     {props.displayData.name}
+                     {props.farmComRecord.name}
                   </Heading>
 
                   <Text>
-                     有機栽培: {organic_converter[props.displayData.is_organic]}
+                     有機栽培: {organic_converter[props.farmComRecord.is_organic]}
                   </Text>
 
                   <Text>
-                     空き農園： {props.displayData.avail_number} / {props.displayData.farm_number}
+                     空き農園： {props.farmComRecord.avail_number} / {props.farmComRecord.farm_number}
                   </Text>
 
                </Flex>
@@ -118,20 +115,55 @@ function Record(props) {
 
             <Flex direction="column">
                <Divider border="0.3px solid #888" borderRadius="0.3px" />
-               <Flex direction="row">
-                  <Text>農園名</Text>
-                  <Text>コスト 円/月</Text>
-                  <Text>最終利用</Text>
+               <Flex direction="row" alignItems="flex-start">
+                  <Text width="25%">農園名</Text>
+                  <Text width="25%">コスト 円/月</Text>
+                  <Text width="25%">最終利用</Text>
                </Flex>
             </Flex>
 
-            {props.displayData.avail_farms.map(avail_farm => (
-               <Flex direction="column">
+            {props.farmComRecord.avail_farms.map(avail_farm => (
+               <Flex direction="column" key={avail_farm.name}>
+
                   <Divider border="0.3px solid #888" borderRadius="0.3px" />
-                  <Flex direction="row">
-                     <Text>{avail_farm.name}</Text>
-                     <Text>{avail_farm.fee}</Text>
-                     <Text>{avail_farm.last_used}</Text>
+                  
+               <Flex direction="row" alignItems="center">
+                     <Text width="25%">{avail_farm.name}</Text>
+                     <Text width="25%">{avail_farm.fee}</Text>
+                     <Text width="25%">{avail_farm.last_used}</Text>
+                     <Button
+                        onClick={() => {
+                           const confirmString = "レンタル開始しますか?\n"
+                              + "農園名: " + String(avail_farm.name) + "\n"
+                              + "価格　: " + String(avail_farm.fee) + "円/月";
+                           
+                           // クリック時にポップアップを表示する
+                           if (window.confirm(confirmString)) {
+                              // OK -> POSTリクエスト送信
+                              const createRentalHeader = { 
+                                 body: {
+                                    http_request: "POST",
+                                    user_id: authUser.username,
+                                    farm_id: avail_farm.id
+                                 }
+                              };
+
+                              async function createRental() {
+                                 // console.log(authenticatedUser.username);
+                                 API.post(apiName, apiPathCreateRental, createRentalHeader).then(response => {
+                                    console.log("レンタル開始");
+                                    console.log(response);
+                                 })
+                              }
+                              createRental();
+                           } else {
+                              // Cancel -> 元の画面に戻る
+                              console.log("レンタルキャンセル");
+                           }
+                        }}
+                     >
+                        レンタル
+                     </Button>
                   </Flex>
                </Flex>
             ))}
@@ -141,17 +173,17 @@ function Record(props) {
    )
 }
 
-function DataList(props) {
-   const displayData = props.displayData;
+function FarmComList(props) {
    return(
       <div>
          <Heading level={4} margin="0 0 30px 0">
             検索結果
          </Heading>
 
-         {displayData.map(displayData => (
-            <Record
-               displayData={displayData}
+         {props.farmComList.map(farmComRecord => (
+            <FarmComRecord
+               key={farmComRecord.name}
+               farmComRecord={farmComRecord}
             />
          ))}
       </div>
@@ -164,7 +196,7 @@ function Result(props) {
    return(
       <div class='result-container'>
          <Search />
-         <DataList displayData={displayData} />
+         <FarmComList farmComList={displayData} />
       </div>
    )
 }
@@ -219,34 +251,36 @@ export default function Rental(props) {
 
    // Get available farms when the page is loaded.
    useEffect(()  => {
+      authUser = props.authUser;
       getAvailFarms();
    }, []);
    
    async function getAvailFarms() {
       const data = [];
 
-      API.get(apiName, apiPath, initHeader).then(response => {
+      API.get(apiName, apiPath, {}).then(response => {
          console.log("+=+=+ in getAvailFarms +=+=+");
          console.log(response);
 
-         // FarmComからデータを抽出しtableDataにセットする
-         for (let key in response) {
-            const record = response[key]
+         // farmComIDを使って各FarmComのデータを抽出し、tableDataにセットする
+         for (let farmComID in response) {
+            // 各FarmComのデータ取得
+            const farmComInfo = response[farmComID]
 
             // avail_farms用の配列を作成
             const avail_farms = [];
-            for (let farmKey in response[key]["avail_farms"]) {
-               avail_farms.push(response[key]["avail_farms"][farmKey]);
+            for (let farmID in farmComInfo["avail_farms"]) {
+               avail_farms.push(farmComInfo["avail_farms"][farmID]);
             }
                
             data.push(
                {
-                  name: record["name"],
-                  is_organic: record["is_organic"],
-                  temperature: record["temperature"],
-                  humidity: record["humidity"],
-                  precipitation: record["precipitation"],
-                  vol_of_sunshine: record["vol_of_sunshine"],
+                  name: farmComInfo["name"],
+                  is_organic: farmComInfo["is_organic"],
+                  temperature: farmComInfo["temperature"],
+                  humidity: farmComInfo["humidity"],
+                  precipitation: farmComInfo["precipitation"],
+                  vol_of_sunshine: farmComInfo["vol_of_sunshine"],
                   avail_vegitables: ["エダマメ"],
                   farm_number: 100,
                   avail_number: 3,

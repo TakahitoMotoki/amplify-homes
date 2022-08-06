@@ -6,9 +6,23 @@ import Journal from "./components/Journal";
 import './App.css';
 
 import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Auth } from "aws-amplify";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function App() {
+   // Authenticated User
+   const [authUser, setAuthUser] = useState([]);
+   // Fetch Authenticated User
+   useEffect(()  => {
+      async function fetchAuthUser() {
+         setAuthUser(await Auth.currentAuthenticatedUser());
+      }
+      fetchAuthUser();
+      console.log("Authenticated User");
+      console.log(authUser);
+   }, []);
+
    return (
       <div class="container">
          <BrowserRouter>
@@ -17,7 +31,7 @@ function App() {
             <Routes>
                <Route index element={ <Profile /> } />
                <Route path="diary" element={ <Diary /> } />
-               <Route path="rental" element={ <Rental /> } />
+               <Route path="rental" element={ <Rental authUser={authUser} /> } />
                <Route path="journal" element={ <Journal /> } />
             </Routes>
          </BrowserRouter>
