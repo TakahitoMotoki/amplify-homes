@@ -1,4 +1,5 @@
 import { Button, Card, Flex, Heading, Image, ScrollView, SelectField, Text } from "@aws-amplify/ui-react";
+import { Table, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
 import { Storage } from "aws-amplify";
 import { useState, useEffect } from 'react';
 import { Cell, PieChart, Pie, Legend, Tooltip } from 'recharts';
@@ -35,6 +36,67 @@ function Stage1(props) {
    )
 }
 
+function FarmSummary(props) {
+   return(
+      <div>
+         <Heading level={4} margin="0 0 30px 0">
+            基本情報
+         </Heading>
+         
+         <Table variation="bordered" margin="30px 0 50px 0">
+            <TableBody>
+               <TableRow>
+                  <TableCell rowspan="2">経過日数</TableCell>
+                  <TableCell>種まきからの経過日数</TableCell>
+                  <TableCell>23日</TableCell>
+               </TableRow>
+               <TableRow>
+                  <TableCell>収穫開始までの日数（目安）</TableCell>
+                  <TableCell>37日</TableCell>
+               </TableRow>
+               <TableRow>
+                  <TableCell rowspan="2">収入・支出</TableCell>
+                  <TableCell>総コスト</TableCell>
+                  <TableCell>1,870円</TableCell>
+               </TableRow>
+               <TableRow>
+                  <TableCell>収穫総数</TableCell>
+                  <TableCell>0.00 kg</TableCell>
+               </TableRow>
+            </TableBody>
+         </Table>
+      </div>
+   )
+}
+
+function FarmPhoto(props) {
+   return(
+      <div>
+      </div>
+   )
+}
+
+function FarmPhotoGallery(props) {
+   return(
+      <div>
+         <Heading level={4}>
+            農地の様子 
+         </Heading>
+
+         <ScrollView height="400px" width="100%" margin="30px 0 50px 0">
+            <Flex direction="row">
+               {props.imgURLs.map(imgURL => (
+                  <Image
+                     src={imgURL}
+                     height="400px"
+                  />
+               ))}
+            </Flex>
+         </ScrollView>
+      </div>
+   )
+}
+
 function ActionPanel(props) {
    const data = [
       { name: 'value', value: props.value },
@@ -43,11 +105,15 @@ function ActionPanel(props) {
 
    return(
       <Card
-         width="40%"
+         width="45%"
          border="solid #888"
          borderRadius="10px"
-         margin="20px"
+         margin="0"
       >
+         <Heading level={4}>
+            {props.title} 
+         </Heading>
+
       
          <Flex direction="column" justifyContent="center" alignItems="center">
             <PieChart width={400} height={200}>
@@ -83,34 +149,31 @@ function ActionPanel(props) {
    )
 }
 
+function ActionPanelContainer(props) {
+   return(
+      <Flex direction="column">
+         <Heading level={4}>
+            アクションパネル
+         </Heading>
+        
+         <Flex direction="row" justifyContent="space-between">
+            <ActionPanel title="害虫" value={78} messageOpt={messageOpt["pest"]} actionOpt={actionOpt["pest"]} />
+            <ActionPanel title="病気" value={52} messageOpt={messageOpt["illness"]} actionOpt={actionOpt["illness"]} />
+         </Flex>
+         <Flex direction="row" justifyContent="space-between">
+            <ActionPanel title="雑草" value={52} messageOpt={messageOpt["illness"]} actionOpt={actionOpt["illness"]} />
+            <ActionPanel title="水やり" value={52} messageOpt={messageOpt["illness"]} actionOpt={actionOpt["illness"]} />
+         </Flex>
+      </Flex>
+   )
+}
+
 function Stage2(props) {
    return(
       <div class='diary-container'>
-         <Heading level={4}>
-            農地の様子 
-         </Heading>
-
-         <ScrollView height="400px" margin="30px 0 50px 0">
-            <Flex direction="row">
-               {props.imgURLs.map(imgURL => (
-                  <Image
-                     src={imgURL}
-                     height="400px"
-                  />
-               ))}
-            </Flex>
-         </ScrollView>
-
-         <Flex direction="column">
-            <Heading level={4}>
-               アクションパネル
-            </Heading>
-           
-            <Flex direction="row" justifyContent="space-around">
-               <ActionPanel value={78} messageOpt={messageOpt["pest"]} actionOpt={actionOpt["pest"]} />
-               <ActionPanel value={52} messageOpt={messageOpt["illness"]} actionOpt={actionOpt["illness"]} />
-            </Flex>
-         </Flex>
+         <FarmSummary />
+         <FarmPhotoGallery imgURLs={props.imgURLs} />
+         <ActionPanelContainer />
       </div>
    )
 }

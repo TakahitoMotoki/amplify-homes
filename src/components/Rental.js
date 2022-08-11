@@ -98,7 +98,7 @@ function FarmComRecord(props) {
                   width="30%"
                />
                <Flex direction="column" alignItems="flex-start" height="200px" width="70%">
-                  <Heading level={5}>
+                  <Heading level={4}>
                      {props.farmComRecord.name}
                   </Heading>
 
@@ -127,7 +127,7 @@ function FarmComRecord(props) {
 
                   <Divider border="0.3px solid #888" borderRadius="0.3px" />
                   
-               <Flex direction="row" alignItems="center">
+                  <Flex direction="row" alignItems="center">
                      <Text width="25%">{avail_farm.name}</Text>
                      <Text width="25%">{avail_farm.fee}</Text>
                      <Text width="25%">{avail_farm.last_used}</Text>
@@ -144,17 +144,18 @@ function FarmComRecord(props) {
                                  body: {
                                     http_request: "POST",
                                     user_id: authUser.username,
-                                    farm_id: avail_farm.id
+                                    farm_id: avail_farm.id,
+                                    cost_plan: 1
                                  }
                               };
 
                               async function createRental() {
-                                 // console.log(authenticatedUser.username);
                                  API.post(apiName, apiPathCreateRental, createRentalHeader).then(response => {
                                     console.log("レンタル開始");
                                     console.log(response);
                                  })
                               }
+
                               createRental();
                            } else {
                               // Cancel -> 元の画面に戻る
@@ -204,59 +205,22 @@ function Result(props) {
 export default function Rental(props) {
 
    // Data displayed in Result.
-   const [tableData, setTableData] = useState([]);
-   const resultData = [
-                        {
-                           name: "埼玉 XX農園",
-                           is_organic: 1,
-                           temperature: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
-                           humidity: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
-                           precipitation: { Aug: 110, Sep: 160, Oct: 80 },
-                           vol_of_sunshine: { Aug: 120, Sep: 80, Oct: 60 },
-                           avail_vegitables:
-                              [
-                                 "エダマメ"
-                              ],
-                           farm_number: 50,
-                           avail_number: 3,
-                           avail_farms:
-                              [
-                                 { id: "", name: "農園003", fee: 1500, last_used: "2021-12-17", area: 5.0 },
-                                 { id: "", name: "農園007", fee: 2500, last_used: "2022-06-17", area: 5.0 },
-                                 { id: "", name: "農園019", fee: 3500, last_used: "2021-06-17", area: 7.0 }
-                              ]
-                        },
-                        {
-                           name: "埼玉 YY農園",
-                           is_organic: 0,
-                           temperature: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
-                           humidity: { Aug: 23.0, Sep: 18.5, Oct: 16.8 },
-                           precipitation: { Aug: 110, Sep: 160, Oct: 80 },
-                           vol_of_sunshine: { Aug: 120, Sep: 80, Oct: 60 },
-                           avail_vegitables:
-                              [
-                                 "エダマメ",
-                                 "ビーツ"
-                              ],
-                           farm_number: 100,
-                           avail_number: 3,
-                           avail_farms:
-                              [
-                                 { id: "", name: "農園003", fee: 1500, last_used: "2021-12-17", area: 5.0 },
-                                 { id: "", name: "農園007", fee: 2500, last_used: "2022-06-17", area: 5.0 },
-                                 { id: "", name: "農園019", fee: 3500, last_used: "2021-06-17", area: 7.0 }
-                              ]
-                        }
-                     ];
+   const [allFarmComInfo, setAllFarmComInfo] = useState([]);
+   const [sortedFarmComInfo, setSortedFarmComInfo] = useState([]);
 
    // Get available farms when the page is loaded.
    useEffect(()  => {
       authUser = props.authUser;
       getAvailFarms();
    }, []);
+
+   // sortedFarmComInfoが更新された時、リロードを行う（検索機能使用時）
+   useEffect(()  => {
+         console.log("sortedFarmComInfo is updated!");
+   }, [sortedFarmComInfo]);
    
    async function getAvailFarms() {
-      const data = [];
+      const setToAllFarmComInfo = [];
 
       API.get(apiName, apiPath, {}).then(response => {
          console.log("+=+=+ in getAvailFarms +=+=+");
@@ -273,7 +237,7 @@ export default function Rental(props) {
                avail_farms.push(farmComInfo["avail_farms"][farmID]);
             }
                
-            data.push(
+            setToAllFarmComInfo.push(
                {
                   name: farmComInfo["name"],
                   is_organic: farmComInfo["is_organic"],
@@ -288,18 +252,17 @@ export default function Rental(props) {
                }
             );
          }
-         setTableData(data);
+         setAllFarmComInfo(setToAllFarmComInfo);
+         setSortedFarmComInfo(setToAllFarmComInfo);
       }).catch(err => {
         console.log(err);
       });
-      console.log("Called API");
-      console.log(tableData);
    }
 
    return(
       <div class='rental-container'>
          <Flex direction="row">
-            <Result displayData={tableData} />
+            <Result displayData={sortedFarmComInfo} />
          </Flex>
       </div>
    );
