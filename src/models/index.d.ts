@@ -28,7 +28,7 @@ export declare class Rental {
   readonly proceeding?: number | null;
   readonly start_ts?: number | null;
   readonly end_ts?: number | null;
-  readonly fee?: number | null;
+  readonly cost_plan?: number | null;
   readonly init_soilmeasurement?: boolean | null;
   readonly result_rank?: string | null;
   readonly result_harvest?: number | null;

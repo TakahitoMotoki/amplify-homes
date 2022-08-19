@@ -1,9 +1,10 @@
-import './Profile.css';
+import { Text } from "@aws-amplify/ui-react";
 
+import './Profile.css';
 function ProfileHeader(props) {
    return(
       <div class='profile-header'>
-         XXX YYY 
+         <Text>XXX YYY</Text>
       </div>
    );
 }

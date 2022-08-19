@@ -6,7 +6,7 @@ type Rental @model @auth(rules: [{allow: public}]) {
   proceeding: Int
   start_ts: AWSTimestamp
   end_ts: AWSTimestamp
-  fee: Float
+  cost_plan: Int
   init_soilmeasurement: Boolean
   result_rank: String
   result_harvest: Float
@@ -44,4 +44,4 @@ type FarmCom @model @auth(rules: [{allow: public}]) {
   vol_of_sunshine: AWSJSON
   is_organic: Boolean
 }
-  
+ 

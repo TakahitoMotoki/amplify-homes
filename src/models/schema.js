@@ -52,10 +52,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "fee": {
-                    "name": "fee",
+                "cost_plan": {
+                    "name": "cost_plan",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -428,5 +428,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "d5ed8f1e380fed245e395fcf6d619bcf"
+    "version": "5d44cda7e68ee1c5a486560e98fa3292"
 };

@@ -40,6 +40,14 @@
             "Name",
             "Arn"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "fetchRental",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     }
@@ -91,6 +99,11 @@
       "service": "Lambda"
     },
     "createRental": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "fetchRental": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

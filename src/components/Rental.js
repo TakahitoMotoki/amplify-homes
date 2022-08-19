@@ -1,5 +1,5 @@
 import { Button, Card, Divider, Flex, Heading, Image, SelectField, Text } from "@aws-amplify/ui-react";
-import { Auth, API } from "aws-amplify";
+import { API } from "aws-amplify";
 import { useState, useEffect } from 'react';
 
 import './Rental.css';
@@ -81,7 +81,7 @@ function Search(props) {
 
 // Child Component for <FarmComList>
 function FarmComRecord(props) {
-   const organic_converter = {0: "不可", 1: "可"}
+   const is_organic_to_text = { "TRUE": "可", "FALSE": "不可" };
 
    return(
       <Card
@@ -103,7 +103,7 @@ function FarmComRecord(props) {
                   </Heading>
 
                   <Text>
-                     有機栽培: {organic_converter[props.farmComRecord.is_organic]}
+                     有機栽培: {props.farmComRecord.is_organic ? is_organic_to_text["TRUE"] : is_organic_to_text["FALSE"] }
                   </Text>
 
                   <Text>
@@ -143,9 +143,10 @@ function FarmComRecord(props) {
                               const createRentalHeader = { 
                                  body: {
                                     http_request: "POST",
-                                    user_id: authUser.username,
-                                    farm_id: avail_farm.id,
-                                    cost_plan: 1
+                                    user_id: authUser.username, // e4e81b69-0e6c-4e0a-b2a9-fbced118f010
+                                    farm_id: avail_farm.id, // 7dd073fd-639b-40f9-8e0c-d037e0335a0e
+                                    cost_plan: 1,
+                                    alias: "TEST"
                                  }
                               };
 
@@ -154,6 +155,8 @@ function FarmComRecord(props) {
                                     console.log("レンタル開始");
                                     console.log(response);
                                  })
+
+
                               }
 
                               createRental();
@@ -208,7 +211,7 @@ export default function Rental(props) {
    const [allFarmComInfo, setAllFarmComInfo] = useState([]);
    const [sortedFarmComInfo, setSortedFarmComInfo] = useState([]);
 
-   // Get available farms when the page is loaded.
+   // 初回ロード時: 利用可能なFarm一覧を取得
    useEffect(()  => {
       authUser = props.authUser;
       getAvailFarms();

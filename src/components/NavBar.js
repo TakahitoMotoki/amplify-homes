@@ -17,11 +17,14 @@ export default function NavBar(props) {
             padding="50px 15px 0 0"
          >
             <NavProfile />
-            <NavItemLevel1 title="Profile" link="profile" />
+
+            <NavItemLevel1 title="Profile" link="" />
             <NavItemLevel1 title="Rental" link="rental" />
+            
             <div class="divider-container">
                <Divider border="0.3px solid #888" borderRadius="0.3px" />
             </div>
+            
             <Text
                color="#888"
                fontSize="14px"
@@ -31,9 +34,11 @@ export default function NavBar(props) {
             </Text>
             <NavItemLevel1 title="Publish" link="journal" />
             <NavItemLevel1 title="Subscribe" link="journal" />
+            
             <div class="divider-container">
                <Divider border="0.3px solid #888" borderRadius="0.3px" />
             </div>
+            
             <Text
                color="#888"
                fontSize="14px"
@@ -51,10 +56,13 @@ export default function NavBar(props) {
             <NavItemLevel1 title="宮崎 - 小麦農園 011" link="diary" />
             <NavItemLevel1 title="宮崎 - 小麦農園 014" link="diary" />
             <NavItemLevel1 title="宮崎 - 小麦農園 018" link="diary" />
+            
             <div class="divider-container">
                <Divider border="0.3px solid #888" borderRadius="0.3px" />
             </div>
+            
             <NavItemLevel1 title="Logout" link="logout" />
+         
          </ScrollView>
       </div>
    );

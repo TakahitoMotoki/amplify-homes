@@ -23,7 +23,11 @@
         },
         "createRental": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
-          "s3Key": "amplify-builds/createRental-7031415a49576d2b4277-build.zip"
+          "s3Key": "amplify-builds/createRental-78616d7a4d526333446a-build.zip"
+        },
+        "fetchRental": {
+          "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
+          "s3Key": "amplify-builds/fetchRental-5145354e625277736752-build.zip"
         }
       }
     }

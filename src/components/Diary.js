@@ -1,10 +1,14 @@
-import { Button, Card, Flex, Heading, Image, ScrollView, SelectField, Text } from "@aws-amplify/ui-react";
+import { Button, Card, Flex, Heading, Image, Loader, ScrollView, SelectField, Text } from "@aws-amplify/ui-react";
 import { Table, TableBody, TableRow, TableCell } from "@aws-amplify/ui-react";
-import { Storage } from "aws-amplify";
+import { StepperField, Radio, RadioGroupField } from "@aws-amplify/ui-react";
+import { API, Storage } from "aws-amplify";
 import { useState, useEffect } from 'react';
 import { Cell, PieChart, Pie, Legend, Tooltip } from 'recharts';
 
 import './Diary.css';
+
+const API_NAME = 'api0c080238';
+const API_PATH_RENTAL = '/rental';
 
 const messageOpt = {
    "pest": [
@@ -30,9 +34,87 @@ const actionOpt = {
    ],
 }
 
+function CustomSelectField(props) {
+   return(
+         <SelectField
+            label={props.title}
+            size='small'
+            margin={props.margin}
+            width={props.width}
+            variation='quiet'
+            placeholder='-- 選択してください --'
+            options={props.options}
+         ></SelectField>
+   )
+}
+
+function AskSoilSetup(props) {
+   return(
+      <div>
+         <CustomSelectField
+            title="野菜"
+            margin="20px 0 0 0"
+            width="40%"
+            options={["ニンジン", "おでん大根", "エダマメ", "ビーツ"]} 
+         />
+         
+         <CustomSelectField
+            title="土壌診断方法"
+            margin="20px 0 0 0"
+            width="40%"
+            options={["簡易診断（無料）", "詳細診断（12,000円）"]} 
+         />
+         
+      </div>
+   )
+}
+
+function AskSeedingSetup(props) {
+   return(
+      <div></div>
+   )
+}
 function Stage1(props) {
+   const [soilSetup, setSoilSetup] = useState('self');
+   const [seedingSetup, setSeedingSetup] = useState('self');
+
    return (
-      <div> Stage1 </div>
+      <div>
+         <Heading level={4} margin="0 0 30px 0">
+            全体の流れ
+         </Heading>
+
+         <Heading level={4} margin="0">
+            土づくり
+         </Heading>
+
+         <RadioGroupField
+            name="selectSoilSetup"
+            onChange={(e) => setSoilSetup(e.target.value)}
+         >
+            <Radio value="self">自分で実施する</Radio>
+            <Radio value="ask">依頼する</Radio>
+         </RadioGroupField>
+         
+         { soilSetup == "ask" && <AskSoilSetup /> }
+         { soilSetup == "self" && <Text> Comming soon ... </Text> }
+
+         <Heading level={4} margin="0">
+            種まき
+         </Heading>
+
+         <RadioGroupField
+            name="selectSeedingSetup"
+            onChange={(e) => setSeedingSetup(e.target.value)}
+         >
+            <Radio value="self">自分で実施する</Radio>
+            <Radio value="ask">依頼する</Radio>
+         </RadioGroupField>
+
+         { seedingSetup == "ask" && <AskSeedingSetup /> }
+         { seedingSetup == "self" && <Text> Comming soon ... </Text> }
+
+      </div>
    )
 }
 
@@ -45,6 +127,11 @@ function FarmSummary(props) {
          
          <Table variation="bordered" margin="30px 0 50px 0">
             <TableBody>
+               <TableRow>
+                  <TableCell>進捗状況</TableCell>
+                  <TableCell>生育中</TableCell>
+                  <TableCell>生育中</TableCell>
+               </TableRow>
                <TableRow>
                   <TableCell rowspan="2">経過日数</TableCell>
                   <TableCell>種まきからの経過日数</TableCell>
@@ -180,10 +267,20 @@ function Stage2(props) {
 
 export default function Diary(props) {
    const [imgURLs, setImgURLs] = useState([]);
-   const [farmStage, setFarmStage] = useState([]);
+   const [farmStage, setFarmStage] = useState(0);
 
-   // Stage 2: Fetch Image URL from S3
    useEffect(()  => {
+      var auth_user = props.authUser;
+      var rental_id = "5SX7Nswd-KZSC-P8GT-yyoj-4mWOgomGM0KS";
+
+      // Stage 1: Fetch Rental
+      async function fetchRental() {
+         API.get(API_NAME, API_PATH_RENTAL + "/" + rental_id, {}).then(response => {
+            console.log(response); 
+         });
+      }
+
+      // Stage 2: Fetch Image URL from S3
       async function fetchImageURL() {
          const urlList: string[] = [];
          
@@ -201,24 +298,29 @@ export default function Diary(props) {
          // Set URLs to imgURLs.
          setImgURLs(urlList);
          // Set a value to farmStage.
-         setFarmStage(2);
+         setFarmStage(1);
       }
 
+      fetchRental();
       fetchImageURL();
    }, []);
 
    // Redraw the page when imgSources is updated.
    useEffect(() => {
-      console.log("useEffect2");
-      console.log(imgURLs[0]);
    }, [imgURLs]);
 
    // FarmStageによって描画内容を変更
    if (farmStage == 1) {
-      return <Stage1 />
+      return (
+         <div class='diary-container'>
+            <Stage1 />
+         </div>
+      )
    } else if (farmStage == 2) {
-      return <Stage2 imgURLs={imgURLs} />
+      return (
+         <Stage2 imgURLs={imgURLs} />
+      )
    } else {
-      return <Stage1 />
+      return <Loader />
    }
 }
