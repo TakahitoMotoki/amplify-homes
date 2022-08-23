@@ -24,8 +24,8 @@
         ]
       }
     },
-    "/rental": {
-      "name": "/rental",
+    "/rentals": {
+      "name": "/rentals",
       "lambdaFunction": "fetchRental",
       "permissions": {
         "setting": "private",

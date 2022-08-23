@@ -27,7 +27,7 @@ def handler(event, context):
     payload     = json.loads(event["body"])
 
     # Rental作成のためのデータ抽出
-    tableName   = "Rental-j2gchw5g4zhf5nhp4oq4w3sgaq-devi"
+    tableName   = "Rental-devi"
     ID          = genIDForDynamoDB().lower()
     now         = datetime.datetime.now()
     startTime_N = int(now.timestamp())

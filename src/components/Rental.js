@@ -155,8 +155,6 @@ function FarmComRecord(props) {
                                     console.log("レンタル開始");
                                     console.log(response);
                                  })
-
-
                               }
 
                               createRental();

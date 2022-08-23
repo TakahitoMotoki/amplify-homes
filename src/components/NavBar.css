@@ -12,3 +12,20 @@
    font-size: 14px;
    padding: 10px 0 10px 50px;
 }
+
+.signout-container {
+   background-color:#222;
+   color: #DDD;
+   display: flex;
+   align-items: center;
+   font-size: 14px;
+   width: 100%;
+   padding: 0px 0px 0px 50px;
+   margin: 0px 0px 50px 0px;
+   transition: 0.6s;
+}
+
+.signout-container:hover {
+   font-size: 12px;
+   transition: 0.6s;
+}

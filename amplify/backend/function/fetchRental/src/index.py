@@ -8,15 +8,24 @@ import random, string
 dynamoDB = boto3.resource('dynamodb')
 
 # Table for fetchRental
-rentalTable = dynamoDB.Table('Rental-j2gchw5g4zhf5nhp4oq4w3sgaq-devi')
+rentalTable = dynamoDB.Table('Rental-devi')
 
 def handler(event, context):
-    rental_id = event["pathParameters"]["proxy"]
+    # Attr('proceeding') のMax, Min設定
+    MIN_PROCEEDING = 1
+    MAX_PROCEEDING = 4
+
+    # event: String を payload: JSON に変換
+    user_id = str(event["pathParameters"]["proxy"])
     
-    # Rentalテーブルのスキャン 
+    output = {}
+
+    # user_id(Partition Key)を使ってRentalテーブルをスキャン 
     try:
-        output = rentalTable.query(
-            KeyConditionExpression=Key("id").eq(rental_id)  
+        # queryData_Farm = farmTable.scan()
+        queryData_Rental = rentalTable.query(
+            KeyConditionExpression=Key("user_id").eq(user_id),
+            FilterExpression=Attr("proceeding").between(MIN_PROCEEDING, MAX_PROCEEDING)
         )
     except Exception as e:
         return {
@@ -28,7 +37,20 @@ def handler(event, context):
             },
             'body': json.dumps('Error:' + str(e))
         }
-    
+
+    # 抽出したデータを加工し、outputに格納
+    for data in queryData_Rental["Items"]:
+        output[data["id"]] = {
+            "id"                  : str(data["id"]),
+            "farm_id"             : str(data["farm_id"]),
+            "vegetable_id"        : str(data["vegetable_id"]),
+            "proceeding"          : str(data["proceeding"]),
+            "cost_plan"           : str(data["cost_plan"]),
+            "init_soilmeasurement": str(data["init_soilmeasurement"]),
+            "alias"               : str(data["alias"]),
+            "start_ts"            : str(data["start_ts"])
+        }
+
     return {
         'statusCode': 200,
         'headers': {
@@ -36,6 +58,5 @@ def handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        'body': json.dumps(str(output))
+        'body': json.dumps(output)
     }
-

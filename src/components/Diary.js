@@ -273,13 +273,6 @@ export default function Diary(props) {
       var auth_user = props.authUser;
       var rental_id = "5SX7Nswd-KZSC-P8GT-yyoj-4mWOgomGM0KS";
 
-      // Stage 1: Fetch Rental
-      async function fetchRental() {
-         API.get(API_NAME, API_PATH_RENTAL + "/" + rental_id, {}).then(response => {
-            console.log(response); 
-         });
-      }
-
       // Stage 2: Fetch Image URL from S3
       async function fetchImageURL() {
          const urlList: string[] = [];
@@ -301,8 +294,7 @@ export default function Diary(props) {
          setFarmStage(1);
       }
 
-      fetchRental();
-      fetchImageURL();
+      // <!== CAUTION ==!> fetchImageURL();
    }, []);
 
    // Redraw the page when imgSources is updated.
