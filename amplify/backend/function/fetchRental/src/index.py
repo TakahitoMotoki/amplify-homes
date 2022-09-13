@@ -17,12 +17,11 @@ def handler(event, context):
 
     # event: String を payload: JSON に変換
     user_id = str(event["pathParameters"]["proxy"])
-    
+
     output = {}
 
-    # user_id(Partition Key)を使ってRentalテーブルをスキャン 
+    # user_id(Partition Key)を使ってRentalテーブルをスキャン
     try:
-        # queryData_Farm = farmTable.scan()
         queryData_Rental = rentalTable.query(
             KeyConditionExpression=Key("user_id").eq(user_id),
             FilterExpression=Attr("proceeding").between(MIN_PROCEEDING, MAX_PROCEEDING)
@@ -33,7 +32,7 @@ def handler(event, context):
             'headers': {
                 'Access-Control-Allow-Headers': '*',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+                'Access-Control-Allow-Mehods': 'OPTIONS,POST,GET'
             },
             'body': json.dumps('Error:' + str(e))
         }

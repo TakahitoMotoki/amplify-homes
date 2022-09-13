@@ -4,10 +4,6 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-type RentalMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
 type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -18,25 +14,6 @@ type FarmMetaData = {
 
 type FarmComMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-export declare class Rental {
-  readonly id: string;
-  readonly farm_id?: string | null;
-  readonly user_id?: string | null;
-  readonly vegetable_id?: string | null;
-  readonly proceeding?: number | null;
-  readonly start_ts?: number | null;
-  readonly end_ts?: number | null;
-  readonly cost_plan?: number | null;
-  readonly init_soilmeasurement?: boolean | null;
-  readonly result_rank?: string | null;
-  readonly result_harvest?: number | null;
-  readonly alias?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Rental, RentalMetaData>);
-  static copyOf(source: Rental, mutator: (draft: MutableModel<Rental, RentalMetaData>) => MutableModel<Rental, RentalMetaData> | void): Rental;
 }
 
 export declare class User {
@@ -58,6 +35,7 @@ export declare class Farm {
   readonly width?: number | null;
   readonly area?: number | null;
   readonly is_available?: boolean | null;
+  readonly base_price_number?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Farm, FarmMetaData>);
@@ -77,6 +55,9 @@ export declare class FarmCom {
   readonly precipitation?: string | null;
   readonly vol_of_sunshine?: string | null;
   readonly is_organic?: boolean | null;
+  readonly base_price?: string | null;
+  readonly farm_number?: number | null;
+  readonly avail_number?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<FarmCom, FarmComMetaData>);

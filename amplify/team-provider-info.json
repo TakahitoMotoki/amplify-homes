@@ -19,7 +19,7 @@
       "function": {
         "getFarmsAvail": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
-          "s3Key": "amplify-builds/getFarmsAvail-6933414c6957334d484c-build.zip"
+          "s3Key": "amplify-builds/getFarmsAvail-5071745a713570585174-build.zip"
         },
         "createRental": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
@@ -27,7 +27,7 @@
         },
         "fetchRental": {
           "deploymentBucketName": "amplify-amplifyhomes-devi-123300-deployment",
-          "s3Key": "amplify-builds/fetchRental-314d6648723751734b62-build.zip"
+          "s3Key": "amplify-builds/fetchRental-7a2f5a65456b4f583855-build.zip"
         }
       }
     }

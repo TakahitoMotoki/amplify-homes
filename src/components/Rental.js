@@ -1,27 +1,31 @@
-import { Button, Card, Divider, Flex, Heading, Image, SelectField, Text } from "@aws-amplify/ui-react";
+import { Badge, Button, Card, CheckboxField, Divider, Flex, Heading, Image, SelectField, Text } from "@aws-amplify/ui-react";
 import { API } from "aws-amplify";
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import { Icon } from "@aws-amplify/ui-react";
+import { HiLocationMarker } from "react-icons/hi"; // MIT License
 
 import './Rental.css';
+import farm_image from './images/farm_sample.jpg';
 
 const apiName = 'api0c080238';
 const apiPath = '/farms/avail';
-const apiPathCreateRental = '/rental/create';
 
 var authUser;
+const sub_font_color = "#AAA";
 
 // Child Component for <Search>
-function CustomSelectField(props) {
+function CustomCheckboxField(props) {
    return(
-         <SelectField
-            label={props.title}
-            size='small'
-            margin={props.margin}
-            width={props.width}
-            variation='quiet'
-            placeholder='-- 選択してください --'
-            options={props.options}
-         ></SelectField>
+      <Card padding="0" width="33%">
+         <Text color={sub_font_color} margin={props.margin}>
+            {props.title} 
+         </Text>
+         {props.options.map(option => (
+            <CheckboxField label={option} margin={props.ops_margin} />
+         ))}
+      </Card>
    )
 }
 
@@ -29,43 +33,34 @@ function CustomSelectField(props) {
 function Search(props) {
    return(
       <div class='search-container'>
-         <Heading level={4}>
+         <Heading level={3}>
             検索条件
          </Heading>
 
-         <Flex direction="row" justifyContent="space-between">
-            <CustomSelectField 
-               title="農作物" 
-               margin="20px 0 0 0"
-               width="40%"
-               options={["エダマメ", "ビーツ"]}
-            />
+         <Flex direction="column" alignItems="center">
+            <Flex direction="row" width="100%">
+               <CustomCheckboxField
+                  title="エリア"
+                  options={ ["北海道・東北", "関東", "中部", "関西・四国", "九州・沖縄"] }
+                  margin="20px 0 10px 0"
+                  ops_margin="5px 0 5px 0"
+               />
 
-            <CustomSelectField
-               title="平均気温"
-               margin="20px 0 0 0"
-               width="40%"
-               options={["寒冷（10℃未満）", "冷涼（10℃~15℃）", "温暖（20℃~25℃）", "熱帯（25℃以上）"]} 
-            />
-         </Flex>
-      
-         <Flex direction="row" justifyContent="space-between">
-            <CustomSelectField
-               title="降水量"
-               margin="20px 0 0 0"
-               width="40%"
-               options={["少なめ", "普通", "多め"]} 
-            />
+               <CustomCheckboxField
+                  title="基準価格（一区画の月額、税込）"
+                  options={ ["~500円", "501円~1,000円","1,001円~"] }
+                  margin="20px 0 10px 0"
+                  ops_margin="5px 0 5px 0"
+               />
 
-            <CustomSelectField
-               title="有機栽培"
-               margin="20px 0 0 0"
-               width="40%"
-               options={["可", "不可"]} 
-            />
-         </Flex>
+               <CustomCheckboxField
+                  title="栽培条件"
+                  options={ ["有機栽培のみ表示"] }
+                  margin="20px 0 10px 0"
+                  ops_margin="5px 0 5px 0"
+               />
+            </Flex>
 
-         <Flex direction="row" justifyContent="center">
             <Button
                variation='primary'
                isLoading={false}
@@ -79,97 +74,90 @@ function Search(props) {
    )
 }
 
+function InfoCard(props) {
+   return(
+      <Card width={props.width} padding="0">
+         <Text color={sub_font_color}>{props.title}</Text>
+         <Heading level={6} margin={props.value_margin}>
+            {props.value}
+         </Heading>
+      </Card>
+   )
+}
+
+function InfoIcon(props) {
+   return(
+      <Flex width="100%" alignItems="center" margin="-10px 0 -10px 0">
+         <Icon 
+            as={props.as}
+            height="30px"
+            width="30px"
+            viewBox={{
+               minX: 0,
+               minY: -5,
+               width: 30,
+               height: 30,
+            }}
+            color={sub_font_color}
+            ariaLabel="Search"
+            margin="0 -10px 0 0"
+         />
+         <Text color={sub_font_color}>
+            {props.value} 
+         </Text>
+      </Flex>
+   )
+}
+
 // Child Component for <FarmComList>
 function FarmComRecord(props) {
-   const is_organic_to_text = { "TRUE": "可", "FALSE": "不可" };
-
    return(
       <Card
          width="100%"
-         border="solid #888"
-         borderRadius="10px"
-         margin="20px"
+         padding="0"
+         margin="0 0 30px 0"
       >
          <Flex direction="column">
+            <Divider border="2px solid #888" borderRadius="2px" margin="0 0 10px 0" />
             <Flex direction="row" alignItems="flex-start">
                <Image
-                  alt="Road to milford sound"
-                  src="/road-to-milford-new-zealand-800w.jpg"
+                  src={farm_image}
                   width="30%"
+                  margin="0 30px 0 0"
                />
-               <Flex direction="column" alignItems="flex-start" height="200px" width="70%">
+               <Flex direction="column" alignItems="flex-start" width="70%">
                   <Heading level={4}>
                      {props.farmComRecord.name}
                   </Heading>
 
-                  <Text>
-                     有機栽培: {props.farmComRecord.is_organic ? is_organic_to_text["TRUE"] : is_organic_to_text["FALSE"] }
-                  </Text>
+                  <InfoIcon
+                     as={HiLocationMarker}
+                     value="埼玉県 XX市 YY町 1-2-3"
+                  />
 
-                  <Text>
-                     空き農園： {props.farmComRecord.avail_number} / {props.farmComRecord.farm_number}
-                  </Text>
+                  { props.farmComRecord.is_organic &&
+                     <Flex direction="row" margin="0 0 20px 0">
+                        <Badge variation="success">有機栽培</Badge>
+                     </Flex>
+                  }
 
+                  <InfoCard
+                     title="基準価格（一区画の月額・税込）"
+                     value={props.farmComRecord.base_price + "円"}
+                     value_margin="10px 0 10px 0"
+                  />
+
+                  <InfoCard
+                     title="空き農園"
+                     value={ props.farmComRecord.avail_number + "/" + props.farmComRecord.farm_number }
+                     value_margin="10px 0 10px 0"
+                  />
+         
+                  <Link to={props.farmComRecord.id} style={{ textDecoration: 'none' }}>
+                     <Text>+ レンタル可能な農地を見る</Text>
+                  </Link>
                </Flex>
             </Flex>
-
-            <Flex direction="column">
-               <Divider border="0.3px solid #888" borderRadius="0.3px" />
-               <Flex direction="row" alignItems="flex-start">
-                  <Text width="25%">農園名</Text>
-                  <Text width="25%">コスト 円/月</Text>
-                  <Text width="25%">最終利用</Text>
-               </Flex>
-            </Flex>
-
-            {props.farmComRecord.avail_farms.map(avail_farm => (
-               <Flex direction="column" key={avail_farm.name}>
-
-                  <Divider border="0.3px solid #888" borderRadius="0.3px" />
-                  
-                  <Flex direction="row" alignItems="center">
-                     <Text width="25%">{avail_farm.name}</Text>
-                     <Text width="25%">{avail_farm.fee}</Text>
-                     <Text width="25%">{avail_farm.last_used}</Text>
-                     <Button
-                        onClick={() => {
-                           const confirmString = "レンタル開始しますか?\n"
-                              + "農園名: " + String(avail_farm.name) + "\n"
-                              + "価格　: " + String(avail_farm.fee) + "円/月";
-                           
-                           // クリック時にポップアップを表示する
-                           if (window.confirm(confirmString)) {
-                              // OK -> POSTリクエスト送信
-                              const createRentalHeader = { 
-                                 body: {
-                                    http_request: "POST",
-                                    user_id: authUser.username, // e4e81b69-0e6c-4e0a-b2a9-fbced118f010
-                                    farm_id: avail_farm.id, // 7dd073fd-639b-40f9-8e0c-d037e0335a0e
-                                    cost_plan: 1,
-                                    alias: "TEST"
-                                 }
-                              };
-
-                              async function createRental() {
-                                 API.post(apiName, apiPathCreateRental, createRentalHeader).then(response => {
-                                    console.log("レンタル開始");
-                                    console.log(response);
-                                 })
-                              }
-
-                              createRental();
-                           } else {
-                              // Cancel -> 元の画面に戻る
-                              console.log("レンタルキャンセル");
-                           }
-                        }}
-                     >
-                        レンタル
-                     </Button>
-                  </Flex>
-               </Flex>
-            ))}
-            
          </Flex>
       </Card>
    )
@@ -178,7 +166,7 @@ function FarmComRecord(props) {
 function FarmComList(props) {
    return(
       <div>
-         <Heading level={4} margin="0 0 30px 0">
+         <Heading level={3} margin="0 0 30px 0">
             検索結果
          </Heading>
 
@@ -232,24 +220,18 @@ export default function Rental(props) {
             // 各FarmComのデータ取得
             const farmComInfo = response[farmComID]
 
-            // avail_farms用の配列を作成
-            const avail_farms = [];
-            for (let farmID in farmComInfo["avail_farms"]) {
-               avail_farms.push(farmComInfo["avail_farms"][farmID]);
-            }
-               
             setToAllFarmComInfo.push(
                {
-                  name: farmComInfo["name"],
-                  is_organic: farmComInfo["is_organic"],
-                  temperature: farmComInfo["temperature"],
-                  humidity: farmComInfo["humidity"],
-                  precipitation: farmComInfo["precipitation"],
-                  vol_of_sunshine: farmComInfo["vol_of_sunshine"],
-                  avail_vegitables: ["エダマメ"],
-                  farm_number: 100,
-                  avail_number: 3,
-                  avail_farms: avail_farms
+                  id              : farmComID,
+                  name            : farmComInfo["name"],
+                  is_organic      : farmComInfo["is_organic"],
+                  temperature     : farmComInfo["temperature"],
+                  humidity        : farmComInfo["humidity"],
+                  precipitation   : farmComInfo["precipitation"],
+                  vol_of_sunshine : farmComInfo["vol_of_sunshine"],
+                  farm_number     : farmComInfo["farm_number"],
+                  avail_number    : farmComInfo["avail_number"],
+                  base_price      : farmComInfo["base_price"],
                }
             );
          }
@@ -261,7 +243,7 @@ export default function Rental(props) {
    }
 
    return(
-      <div class='rental-container'>
+      <div className='rental-container'>
          <Flex direction="row">
             <Result displayData={sortedFarmComInfo} />
          </Flex>

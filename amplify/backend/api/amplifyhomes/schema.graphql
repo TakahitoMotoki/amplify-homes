@@ -1,18 +1,3 @@
-type Rental @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  farm_id: ID
-  user_id: ID
-  vegetable_id: ID
-  proceeding: Int
-  start_ts: AWSTimestamp
-  end_ts: AWSTimestamp
-  cost_plan: Int
-  init_soilmeasurement: Boolean
-  result_rank: String
-  result_harvest: Float
-  alias: String
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   icon: AWSURL
@@ -28,6 +13,7 @@ type Farm @model @auth(rules: [{allow: public}]) {
   width: Float
   area: Float
   is_available: Boolean
+  base_price_number: Float
 }
 
 type FarmCom @model @auth(rules: [{allow: public}]) {
@@ -43,5 +29,8 @@ type FarmCom @model @auth(rules: [{allow: public}]) {
   precipitation: AWSJSON
   vol_of_sunshine: AWSJSON
   is_organic: Boolean
+  base_price: String
+  farm_number: Int
+  avail_number: Int
 }
  

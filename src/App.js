@@ -2,6 +2,7 @@ import NavBar from "./components/NavBar";
 import Diary from "./components/Diary";
 import Profile from "./components/Profile";
 import Rental from "./components/Rental";
+import RentalList from "./components/RentalList";
 import Journal from "./components/Journal";
 import './App.css';
 
@@ -23,6 +24,7 @@ function App() {
    
    // Rental一覧
    const [myRentals, setMyRentals] = useState([]);
+   const [myRentalsDict, setMyRentalsDict] = useState({});
 
    // 初回ロード時: Authenticated Userの取得
    useEffect(()  => {
@@ -36,7 +38,7 @@ function App() {
       console.log(authUser);
    }, []);
    
-   // fetchRentals用のproxy生成
+   // fetchRentals用のパラメータ生成
    useEffect(()  => {
       if (authUser !== "") {
          console.log("[App.js] proxy is created!");
@@ -50,12 +52,15 @@ function App() {
    useEffect(()  => {
       // Rental一覧取得
       async function fetchRentals() {
-         const my_rentals = [];
+         var my_rentals = [];
+         var my_rentals_dict = {};
          
+         // GETリクエスト送信
          API.get(apiName, apiPath + userIDProxy, {}).then(response => {
             console.log("[App.js] fetchRentals API is activated!");
             console.log(response);
-
+            
+            // Responseをレンタル一覧にセット
             for (let rental_id in response) {
                var rental_info = response[rental_id];
                my_rentals.push(
@@ -67,12 +72,26 @@ function App() {
                      cost_plan       : rental_info["cost_plan"],
                      init_measurement: rental_info["init_measurement"],
                      alias           : rental_info["alias"],
-                     start_ts        : rental_info["start_ts"]
+                     start_ts        : rental_info["start_ts"],
+                     end_ts          : rental_info["end_ts"]
                   }
                )
+
+               my_rentals_dict[rental_id] = {
+                  id              : rental_info["id"],
+                  farm_id         : rental_info["farm_id"],
+                  vegetable_id    : rental_info["vegetable_id"],
+                  proceeding      : rental_info["proceeding"],
+                  cost_plan       : rental_info["cost_plan"],
+                  init_measurement: rental_info["init_measurement"],
+                  alias           : rental_info["alias"],
+                  start_ts        : rental_info["start_ts"],
+                  end_ts          : rental_info["end_ts"]
+               }
             }
 
             setMyRentals(my_rentals);
+            setMyRentalsDict(my_rentals_dict);
          }).catch(err => {
             console.log(err);
          });
@@ -92,14 +111,14 @@ function App() {
                <Route index
                   element={ <Profile /> }
                />
-               <Route path="diary/*" 
-                  element={ <Diary authUser={authUser} myRentals={myRentals} />}
+               <Route path="diary/:rental_id" 
+                  element={ <Diary authUser={authUser} myRentals={myRentalsDict} />}
+               />
+               <Route path="rental/:farmcom_id"
+                  element={ <RentalList authUser={authUser} /> }
                />
                <Route path="rental"
                   element={ <Rental authUser={authUser} /> }
-               />
-               <Route path="journal"
-                  element={ <Journal /> }
                />
             </Routes>
          </BrowserRouter>
